@@ -1,0 +1,67 @@
+@{
+	Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta charset="UTF-8">
+  <title>Pyramid QA Framework </title>
+  <!-- Favicon -->
+
+  @*@Styles.Render("~/assets/css")
+  @Styles.Render("~/assets/pci-connectables-css")
+  @Scripts.Render("~/bundles/modernizr")*@
+  <script type="text/javascript">
+    var traceLog = {
+      add(item) {
+        console.log(item);
+      }
+    };
+  </script>
+</head>
+<body>
+  @*@Scripts.Render("~/bundles/jquery")
+  @Scripts.Render("~/bundles/bootstrap")
+  @Scripts.Render("~/bundles/pci-connectables")*@
+  <my-app>
+    <div class="loader-wrapper" id="loader-1">
+      <div id="loader"></div>
+    </div>
+  </my-app>
+  @*@Scripts.Render("~/bundles/angular")*@
+  @*<script type="text/javascript" src="~/dist/inline.bundle.js"></script>
+    <script type="text/javascript" src="~/dist/polyfills.bundle.js"></script>
+    <script type="text/javascript" src="~/dist/styles.bundle.js"></script>
+    <script type="text/javascript" src="~/dist/vendor.bundle.js"></script>
+    <script type="text/javascript" src="~/dist/main.bundle.js"></script>*@
+  <script type="text/javascript">
+         var _globalCurrentExcelHotInstance = {};
+         function triggerExcelInsertColLeft() {
+             var event = new CustomEvent("onInsertColumnLeftOfGrid");
+            window.dispatchEvent(event);
+         }
+
+         function triggerExcelInsertColRight() {
+             var event = new CustomEvent("onInsertColumnRightOfGrid");
+             window.dispatchEvent(event);
+         }
+
+         function triggerExcelRemoveCol() {
+             var event = new CustomEvent("onRemoveColumnOfGrid");
+             window.dispatchEvent(event);
+         }
+
+         function triggerExcelRenameSheet() {
+             var event = new CustomEvent("onRenameSheetofGrid");
+             window.dispatchEvent(event);
+         }
+
+         function triggerExcelRenameColumn() {
+             var event = new CustomEvent("onRenameColumnofGrid");
+             window.dispatchEvent(event);
+         }
+    </script>
+</body>
+</html>

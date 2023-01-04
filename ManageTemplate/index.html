@@ -1,0 +1,1800 @@
+<!doctype html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Form Builder</title>
+  <link rel="stylesheet" href="css/jquery.ui.theme.css" />
+  <link rel="stylesheet" href="css/bootstrap.css" />
+  <link rel="stylesheet" href="BootstrapDatePicker/bootstrap-datetimepicker.css" />
+  <link rel="stylesheet" href="css/style.css" />
+
+  <script src="js/jquery.min.js"></script>
+  <script src="js/jquery.ui.min.js"></script>
+  <script src="js/lodash.js"></script>
+  <script src="js/bootstrap.js"></script>
+  <script src="js/beautifyhtml.js"></script>
+  <script src="js/jquery.tmpl.js"></script>
+  <script src="js/jquery-1.12.1-ui.js"></script>
+
+  <!-- <script type="text/x-jquery-tmpl" src="templates.html"></script> -->
+  <script src="FormBuilder/Editform.js"></script>
+  <script src="FormBuilder/main.js"></script>
+
+
+  <script src="bootbox-master/dist/bootbox.min.js"></script>
+  <link rel="stylesheet" href="css/bootstrap.min.css" />
+  <script src="js/bootstrap.min.js"></script>
+
+</head>
+
+<body>
+  <div class="container-fluid">
+    <div class="row content_top">
+     
+      <div class="form-group col-md-4 col-lg-4 col-sm-4 col-xs-12">
+        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 padding0">
+          <label for="inputdefault">Template Module&nbsp;<span class="erroralert">*</span></label>
+          <select name="selectedTemplateType"
+                  id="TemplateType"
+                  class="form-control col-md-12 col-lg-12 col-sm-12 col-xs-12"
+                  onchange="getDefaultTemplate()"
+                  required>
+            <option value="0" selected>Select Template Module</option>
+          </select>
+        </div>
+
+      </div>
+      <div class="form-group col-md-4 col-lg-4 col-sm-4 col-xs-12">
+        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 padding0">
+          <label for="inputdefault">Template Name&nbsp;<span class="erroralert">*</span></label>
+          <input type="text" autofocus
+                 class="form-control col-md-12 col-lg-12 col-sm-12 col-xs-12"
+                 name="TemplateName"
+                 id="TemplateName"
+                 placeholder="Enter Template Name"
+                 title="Enter your template name."
+                 pattern="^(?=.*\S)[a-zA-Z ]*$"
+                 maxlength="50"
+                 minlength="4" required />
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+  <div id="divAdminBody">
+    <div style="margin-top: 5px;">
+      <div class="col-md-12">
+        <div class="col-md-2 container" style="background-color: #fff;">
+          <h3>Controls</h3>
+          <form role="form" id="controiList">
+            <!-- Button -->
+            <div class="form-group draggable" data-type="Button" ondragstart="OnDragStart(event,'btn')">
+              <span class="glyphicon conrolimage"><img alt="" class="img-responsive" src="../src/assets/images/button_icon.png"></span>
+              <label for="Button-1" data-label="lbl"  class="lblBtnId">Button</label>
+              <!--<label for="Button-label" data-label="ctrlId"></label>-->
+              <div class="controls" style="display: none;">
+                <input type="button" id="Button-1" name="Button-1" value="Button" class="btn btn-default" />
+              </div>
+            </div>
+
+            <!--Calendar-->
+            <div class="form-group draggable" data-type="Calendar" ondragstart="OnDragStart(event,'cal')" >
+              <span class="glyphicon glyphicon-calendar conrolimage add_new_txt_icon"></span>
+              <label for="Calendar-1" data-label="lbl" class="lblCalId">Calendar</label>
+              <label for="input-text-label" data-label="ctrlId"></label>
+              <div class="controls" style="display: none;">
+                <input type='text' readonly="readonly" id='Calendar-1' style="width: 110px;" data-type="Date" />
+                <span class="glyphicon glyphicon-calendar "></span>
+              </div>
+            </div>
+
+            <!--CheckBox-->
+            <div class="form-group draggable" data-type="CheckBox" ondragstart="OnDragStart(event,'chk')">
+              <span class="glyphicon glyphicon-check conrolimage add_new_txt_icon"></span>
+              <label class="control-label lblChkId" for="CheckBox-1" data-label="lbl">CheckBox List</label>
+              <label for="input-text-label" data-label="ctrlId"></label>
+              <div class="controls" style="display: none;">
+                <label class="radio" for="CheckBox-1">
+                  <input type="CheckBox"
+                         name="CheckBox-1"
+                         id="CheckBox-1"
+                         autofillid=""
+                         fieldid=""
+                         value="Option one"
+                         checked="checked"> Option one
+                </label>
+
+              </div>
+            </div>
+
+            <!--Grid-->
+            <div class="form-group draggable" data-type="Grid">
+              <span class="glyphicon conrolimage"><img alt="" class="img-responsive" src="../src/assets/images/control_grid_icon.png"></span>
+              <label for="Grid-1">Control Grid</label>
+              <label for="input-text-label" style="display: none"></label>
+              <div class="controls" style="display: none;">
+                <div id="Grid-1" style="overflow-x: auto; max-width: 700px; max-height: 280px;">
+
+                </div>
+              </div>
+            </div>
+
+            <!--DropDown-->
+            <div class="form-group draggable" data-type="DropDownList"   ondragstart="OnDragStart(event,'ddl')">
+              <span class="glyphicon glyphicon-collapse-down conrolimage add_new_txt_icon"></span>
+              <label for="DropDownList-1" data-label="lbl" class="lblDdlId">DropDown List</label>
+              <label for="input-text-label" data-label="ctrlId"></label>
+              <select class="form-control controls" style="display: none;" id="DropDownList-1">
+                <!--option fieldid="" value="">Select</option-->
+                <option fieldid="" value="Option One">Option One</option>
+              </select>
+              <!--p class="help-block">Example block-level help text here.</p-->
+            </div>
+
+            <!--Excel Grid-->
+            <div class="form-group draggable" data-type="ExcelGrid">
+              <span class="glyphicon  conrolimage "><img alt="" class="img-responsive" src="../src/assets/images/excel_grid_icon.png"></span>
+              <label for="ExcelGrid-1">Excel Grid</label>
+              <label for="input-text-label" style="display: none"></label>
+              <div class="controls" style="display: none;">
+                <div id="ExcelGrid-1" style="overflow-x: auto; max-width: 700px;">
+
+                </div>
+              </div>
+            </div>
+
+            <!--Header-->
+            <div class="form-group draggable" data-type="Header"   ondragstart="OnDragStart(event,'hdr')">
+              <span class="glyphicon conrolimage"><img alt="" class="img-responsive" src="../src/assets/images/header_icon.png"></span>
+              <label for="Header-1"  class="lblHdrId">Header</label>
+              <input type='text' class="form-control" id='Header-1' style="display: none;" />
+              <div id="headerTextdiv" style="text-align: left">
+              </div>
+            </div>
+
+            <!--MultiSelect-DropDown-->
+            <div class="form-group draggable" data-type="MultiSelect"   ondragstart="OnDragStart(event,'mul')">
+              <span class="glyphicon  conrolimage"><img alt="" class="img-responsive" src="../src/assets/images/multi_select_icon.png"></span>
+              <label for="MultiSelect-1" data-label="lbl"  class="lblMulId">Multi-Select</label>
+              <label for="input-text-label" data-label="ctrlId"></label>
+              <select class="form-control controls" multiple="multiple" style="display: none;" id="MultiSelect-1">
+                <!--option fieldid="" value="">Select</option-->
+                <option fieldid="" value="Option One">Option One</option>
+                <option fieldid="" value="Option Two">Option Two</option>
+
+              </select>
+              <!--p class="help-block">Example block-level help text here.</p-->
+            </div>
+
+            <!--Radio-->
+            <div class="form-group draggable" data-type="Radio"   ondragstart="OnDragStart(event,'rdb')">
+              <span class="glyphicon glyphicon-record conrolimage add_new_txt_icon"></span>
+              <label class="control-label lblRdbId" for="RadioButton-1" data-label="lbl">Radio Group</label>
+              <label for="input-text-label" data-label="ctrlId"></label>
+              <div class="controls" style="display: none; padding-left: 20px;">
+                <label class="radio" for="RadioButton-1">
+                  <input type="radio" name="RadioButton-1" id="RadioButton-1" fieldid="" value="Option one" checked="checked"> Option one
+                </label>
+                <label class="radio" for="RadioButton-1">
+                  <input type="radio" name="RadioButton-1" id="RadioButton-1" fieldid="" value="Option two"> Option two
+                </label>
+              </div>
+            </div>
+
+            <!--Tab-->
+            <div class="form-group draggable" data-type="Tab">
+              <span class="glyphicon conrolimage"><img alt="" class="img-responsive" src="../src/assets/images/tab_icon.png"></span>
+              <label for="Tab-1">Tab</label>
+              <label for="input-text-label" style="display: none"></label>
+              <div class="controls" style="display: none;">
+                <div id="Tab-1" class="tabcontrol">
+                </div>
+              </div>
+            </div>
+
+            <!--Table-->
+            <div class="form-group draggable" data-type="Table">
+              <span class="glyphicon  conrolimage "><img alt="" class="img-responsive" src="../src/assets/images/table_icon.png"></span>
+              <label for="Table-1">Table</label>
+              <label for="input-text-label" style="display: none"></label>
+              <div class="controls" style="display: none;">
+                <div id="Table-1" style="overflow-x: auto; max-width: 700px;">
+
+                </div>
+              </div>
+            </div>
+
+            <!--TextArea-->
+            <div class="form-group draggable" data-type="TextBox-MultiLine"   ondragstart="OnDragStart(event,'txta')">
+              <span class="glyphicon  conrolimage"><img alt="" class="img-responsive" src="../src/assets/images/text_area_icon.png"></span>
+              <label for="TextArea-1" data-label="lbl" class="lblTxtaId">TextArea </label>
+              <label for="input-text-label" data-label="ctrlId"></label>
+              <textarea class="form-control controls" rows="4" cols="11" id="TextArea-1" name="TextArea-1" placeholder="Enter text" pattern="^[ a-zA-Z0-9\b_@./#&+-]+$" onkeydown="return alphanumericWithSpecialCharacter(event)" title="" style="display: none;"></textarea>
+              <!--p class="help-block">Example block-level help text here.</p-->
+            </div>
+
+            <!--TextBox-->
+            <div class="form-group draggable" data-type="TextBox"   ondragstart="OnDragStart(event,'txt')">
+              <span class="glyphicon  conrolimage"><img alt="" class="img-responsive" src="../src/assets/images/text_box_icon.png"></span>
+              <label for="TextBox-1" data-label="lbl" class="lblTxtId">TextBox </label>
+              <label for="input-text-label" data-label="ctrlId"></label>
+              <input type="text" class="form-control controls" id="TextBox-1" name="TextBox-1" placeholder="Enter text" pattern="^[ a-zA-Z0-9\b_@./#&+-]+$" onkeydown="return alphanumericWithSpecialCharacter(event)" style="display: none;">
+              <!--p class="help-block">Example block-level help text here.</p-->
+            </div>
+
+
+          </form>
+        </div>
+        <div class="col-md-7" style="padding: 30px">
+          <div style="background-color: #fff; border-radius: 5px; padding: 20px;
+						box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);">
+            <div class="text-muted empty-form text-center" style="font-size: 24px;">Drag & Drop elements to build form.</div>
+            <div class="row form-body">
+              <div class="col-md-12 droppable sortable parent" id="maindiv" data-type="FormType" style="min-height: 360px;">
+
+              </div>
+            </div>
+            <div>
+              <button id="btnSaveForm" class="btn btn-primary" title="Create unpublished Template" onclick="SetJSON(0)" disabled="disabled">Save</button> &nbsp;&nbsp;
+              <button id="btnSaveAndPublishForm" class="btn btn-primary" title="Create and Publish Template" onclick="SetJSON(1)" disabled="disabled">Save and Publish </button>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3 propertyDiv" style="padding: 0px 30px 30px 30px; background-color: #fff; min-height: 360px; display: none; padding: 0px;">
+          <div class="row">
+            <h3 class="col-md-12">Properties</h3>
+
+            <form role="form" id="Properties" style=" min-height: 356px; padding: 0px !important;">
+              <!--
+                  Controls properties will come here using jquery template engine
+              -->
+            </form>
+
+            <div id="data" class="text-left pad0015">
+              <button id="btnSaveProperties" onclick="SetProperties(this);" class="btn btn-primary">Save Properties</button>
+              <button id="btnCancelProperties" onclick="CancelProperties(this);" class="btn cancel-button-temp">Cancel</button>
+              <input type="hidden" id="hdnSelectedControlType" value="">
+              <input type="hidden" id="hdnSelectedControlId" value="">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script id="textboxPropertiesTemplate" type="text/x-jquery-tmpl">
+  <div class="form-group col-md-12">
+    <label for="txtLabelText">Label</label>&nbsp;
+    <span class="erroralert">*</span>
+    <input type="text" class="form-control LabelText" id="txtLabelText" placeholder="Label text" maxlength="50" onkeydown="return alphanumericWithSpecialCharacterForLabel(event);">
+    <div id="dvTxtBoxlbl" class="erroralert" style="display:none;"></div>
+    <div>
+      <label class="pad10" for="ShowLabel" class="pad10 add_new_checkbox1">Show Label</label>
+      <input type="checkbox" class="ShowLabel" id="chkShowLabel" />
+      <label class="pad10 add_new_checkbox1" for="Required">Required</label>
+      <input type="checkbox" class="Required" id="chkRequired" />
+    </div>
+    <div>
+      <label class="pad10" for="placeholder">Watermark</label>&nbsp;
+      <span class="erroralert">*</span>
+      <input type="text" class="form-control TextBoxPlaceholder" id="txtplaceholder" placeholder="Enter Text" maxlength="50" onkeydown="return alphanumericWithSpecialCharacter(event);">
+      <div id="dvTxtBoxplaceholder" class="erroralert" style="display:none;"></div>
+    </div>
+    <div>
+      <label class="pad10" for="Tooltip">Tooltip</label>&nbsp;
+      <span class="erroralert" style="display:none;">*</span>
+      <input type="text" class="form-control Tooltip" id="txtTooltip" placeholder="Tooltip" maxlength="50" onkeydown="return alphanumericWithSpecialCharacter(event);">
+      <div id="dvTxtBoxtooltip" class="erroralert" style="display:none;"></div>
+    </div>
+    <div id="dvAGenerated">
+      <label class="pad10" for="AutoGenerated">Auto Generated</label>
+      <input type="checkbox" class="AutoGenerated" style="height:15px;width:15px;" id="chkAutoGenerated" onchange="ShowDivAutoGenerated(this)" />
+     </div>
+    <div id="dvAFill">
+
+      <label class="pad10" for="Autofill">Auto fill configuration</label>
+      <input type="checkbox" class="Autofill add_new_checkbox2" id="chkAutofill" text="Autofill" onchange="AutofillChangeTextbox(this)">
+    </div>
+   
+
+    <div class="form-group " data-type="DropDown">
+      <label class="pad10" for="select-1">Data Type:</label>
+      <select class="form-control DataType" id="selectDataType" onchange="showhideminmaxcontrol(this)">
+        <option value="Alpha">Alpha</option>
+        <option value="AlphaNumeric">AlphaNumeric</option>
+        <option value="FreeText">Free Text</option>
+        <option value="Numeric">Numeric</option>
+      </select>
+    </div>
+
+    <div class="controls" id="autofilloptionstxt" style="display: none;">
+      <div class="rhs-Properties-row">
+        <label for="ddlDbType">Database Type</label><br />
+        <select class="form-control AutoFillDbType" id="ddlDbType" style="width:201px" onchange="dbTypeChange(this)">
+          <option value="MySQL">MySQL</option>
+          <option value="SQL">SQL Server</option>
+          <option value="Oracle">Oracle</option>
+          <option value="IBMDB2">IBM Db2</option>
+        </select>
+      </div>
+      <div class="rhs-Properties-row">
+        <label for="txtServerName">Server Name</label>
+        <input type="text" class="form-control AutoFillServer" id="txtServerName" maxlength="100" style="width:200px" placeholder="Server Name" onkeydown="return alphanumericWithSpecialCharacter(event);">
+      </div>
+      <div class="rhs-Properties-row">
+        <div id="dvAuthMode" style="display: none;">
+          <label for="rblAuthenticationMode">Authentication Mode</label>
+          <input type="radio" name="rblAuthenticationMode" id="rblAuthenticationMode" value="Windows" onchange="AuthenticationModeChange(this)"> Windows
+          <input type="radio" name="rblAuthenticationMode" id="rblAuthenticationMode" value="SQL" onchange="AuthenticationModeChange(this)" checked="checked"> SQL
+        </div>
+      </div>
+      <div id="dvPort" class="rhs-Properties-row">
+        <label for="txtPort">Port</label>
+        <input type="text" class="form-control AutoFillPort" id="txtPort" maxlength="100" style="width:200px" placeholder="Port" onkeydown="return numbersOnly(event);">
+      </div>
+
+      <div id="dvUsr">
+        <div class="rhs-Properties-row">
+          <label for="txtUserName">User Name</label>
+          <input type="text" class="form-control AutoFillUserName" id="txtUserName" maxlength="100" style="width:200px" placeholder="User Name" onkeydown="return alphanumericWithSpecialCharacter(event);">
+        </div>
+        <div class="rhs-Properties-row">
+          <label for="txtPassword">Password</label>
+          <input type="password" class="form-control AutoFillPassword" id="txtPassword" maxlength="100" style="width:200px" placeholder="Password" onkeydown="return alphanumericWithSpecialCharacter(event);">
+        </div>
+      </div>
+      <div class="rhs-Properties-row"><a onclick="getAllDatabases();">Test Connection</a></div>
+      <div class="rhs-Properties-row">
+        <label for="ddlDatabase">DataBase Name</label>
+        <select class="form-control AutoFillDatabase" id="ddlDatabase" style="width:201px" onchange="onDatabaseSelect()">
+        </select>
+      </div>
+      <div class="rhs-Properties-row">
+        <label for="rblTableSql">Table/SQL Query</label>
+        <input type="radio" name="rblTableSql" id="rblTableSql" value="Table" onchange="TableSqlChange(this)" checked="checked"> Table/Column
+        <input type="radio" name="rblTableSql" id="rblTableSql" value="SQLQuery" onchange="TableSqlChange(this)"> SQL Query
+
+        <div id="divOptTable">
+          <div class="rhs-Properties-row">
+            <label for="ddlTablesList">Table Name</label>
+            <select class="form-control AutoFillTable" id="ddlTablesList" style="width:201px" onchange="onTableSelect()">
+            </select>
+          </div>
+          <div class="rhs-Properties-row">
+            <label for="ddlColumn">Column Name</label>
+            <select class="form-control AutoFillTableColumn" id="ddlColumn" style="width:201px" onchange="onColumnSelectforTxt()">
+            </select>
+          </div>
+        </div>
+        <div id="divOptSqlQuery" style="display:none">
+          <div class="rhs-Properties-row">
+            <label for="txtSqlQuery">SQL Query</label>
+            <input type="text" class="form-control AutoFillSqlQuery" id="txtSqlQuery" style="width:200px" placeholder="SQL Query" onkeydown="return alphanumericForSql(event);">
+          </div>
+          <div class="rhs-Properties-row">
+            <a onclick="getSqlQueryValuesforTxt();">Fetch</a>
+          </div>
+        </div>
+        <div class="rhs-Properties-row">
+          <label for="txtColValues">Options</label>
+          <input type="text" class="form-control AutoFillValue" id="txtColValues" maxlength="100" style="width:200px" placeholder="Value" readonly />
+        </div>
+       </div>
+      </div>
+        <div id="customtxt">
+          <div id="dvAutoGenerated" style="display:none;">
+            <div id="dvAutoGeneratedPrefix">
+              <label for="txtAutoGenerated" style="padding-bottom: 15px;">Prefix</label>
+              <input type="text" class="form-control autoGeneratedVal" id="txtAutoGenerated" maxlength="4" style="width:100%; margin-top: -15px !important;" placeholder="Format Character" onkeydown="return alphabetsOnly(event);">
+              <div id="dvErrorAutogenerated" class="erroralert" style="display:none;"></div>
+            </div>
+            <label for="txtAutoGenerateDigit" style="padding-bottom: 15px; padding-top: 11px;">Minimum Length</label>
+            <input type="text" class="form-control autoGeneratedValDig" id="txtAutoGenerateDigit" maxlength="2" style="width:100%; margin-top: -15px !important;" placeholder="Minimum Length" onkeydown="return numbersOnly(event);">
+            <div id="dvErrorAutogeneratedDig" class="erroralert" style="display:none;"></div>
+          </div>
+
+          <label for="TextBoxName" class="hideControl">Name</label>
+          <input type="text" class="form-control ControlName hideControl" id="TextBoxName" placeholder="Control name" ondrag="return false" ondrop="return false" onpaste="return false" onkeydown="return alphabetsAndNumericOnly(event);">
+
+          <div id="dvMaxLength">
+            <label class="pad10" for="Max Length">Max Length</label>
+            <input type="text" class="form-control MaxLength" id="txtMaxLength" maxlength="10" style="width:100%" placeholder="Max length" onkeydown="return numbersOnly(event);">
+          </div>
+
+          <div class="minmaxcontrol" style="display: none;" id="dvminmaxcontrol">
+            <div id="dvminmaxvalue" class="erroralert" style="display:none;"></div>
+            <label for="txtMinValue">Minimum value</label>
+            <input type="text" class="form-control MinValue" id="txtMinValue" onkeydown="return numbersOnly(event);" maxlength="10" style="width:130px" placeholder="Minimum Value">
+
+            <label for="txtMaxValue">Maximum value</label>
+            <input type="text" class="form-control MaxValue" id="txtMaxValue" onkeydown="return numbersOnly(event);" maxlength="10" style="width:130px" placeholder="Maximum Value">
+
+            <label for="txtMaxValue">Precision digit</label>
+            <input type="text" class="form-control Precisiondigit" id="txtPrecisiondigit" maxlength="1" onkeydown="return numbersOnly(event);" style="width:130px" placeholder="Precision digits">
+          </div>
+        </div>
+        <label class="pad10" for="txtWidth">Width</label>
+        <input type="text" class="form-control ControlWidth" id="txtWidth" maxlength="4" style="width:100%" placeholder="Control width" onkeydown="return numbersOnly(event);">
+
+      </div>
+  </script>
+<script id="textareaPropertiesTemplate" type="text/x-jquery-tmpl">
+  <div class="form-group col-md-12" style="padding: 0px;">
+    <label for="txtLabelText">Label</label>&nbsp;
+    <span class="erroralert">*</span>
+    <input type="text" class="form-control LabelText" id="txtLabelText" placeholder="Label text" maxlength="50" onkeydown="return alphanumericWithSpecialCharacterForLabel(event);">
+    <div id="dvTxtarealbl" class="erroralert" style="display:none;"></div>
+    <div>
+      <label class="pad10" for="ShowLabel" class="pad10 add_new_checkbox1">Show Label</label>
+      <input type="checkbox" class="ShowLabel" id="chkShowLabel" />
+    </div>
+
+    <label for="TextBoxName" class="hideControl">Name</label>
+    <input type="text" class="form-control ControlName hideControl" id="TextBoxName" placeholder="Control name" ondrag="return false" ondrop="return false" onpaste="return false" onkeydown="return alphabetsAndNumericOnly(event);">
+
+    <label class="pad10" for="placeholder">Watermark</label>&nbsp;
+    <span class="erroralert">*</span>
+    <input type="text" class="form-control TextBoxPlaceholder" id="txtplaceholder" placeholder="Enter Text" maxlength="50" onkeydown="return alphanumericWithSpecialCharacter(event);">
+    <div id="dvTxtareaplaceholder" class="erroralert" style="display:none;"></div>
+
+    <label class="pad10" for="Tooltip">Tooltip</label>&nbsp;
+    <span class="erroralert" style="display:none;">*</span>
+    <input type="text" class="form-control Tooltip" id="txtTooltip" placeholder="Tooltip" maxlength="50" onkeydown="return alphanumericWithSpecialCharacter(event);">
+    <div id="dvTxtareatooltip" class="erroralert" style="display:none;"></div>
+
+    <label class="pad10" for="Max Length">Max Length</label>
+    <input type="text" class="form-control MaxLength" id="txtMaxLength" maxlength="10" style="width:100%" placeholder="Max length" onkeydown="return numbersOnly(event);">
+
+    <label class="pad10" for="txtWidth">Width</label>
+    <input type="text" class="form-control ControlWidth" id="txtWidth" maxlength="10" style="width:100%" placeholder="Control width" onkeydown="return numbersOnly(event);">
+
+    <label class="pad10 add_new_checkbox1" for="Required">Required</label>
+    <input type="checkbox" class="Required" id="chkRequired" text="Required" />
+
+  </div>
+</script>
+
+<script id="dropdownPropertiesTemplate" type="text/x-jquery-tmpl">
+  <div class="form-group col-md-12">
+    <label for="txtLabelText">Label</label>&nbsp;
+    <span class="erroralert">*</span>
+    <input type="text" class="form-control LabelText" id="txtLabelText" placeholder="Label text" maxlength="50" onkeydown="return alphanumericWithSpecialCharacterForLabel(event);">
+    <div id="dvDropDownlbl" class="erroralert" style="display:none;"></div>
+    <div>
+      <label class="pad10" for="ShowLabel" class="pad10 add_new_checkbox1">Show Label</label>
+      <input type="checkbox" class="ShowLabel" id="chkShowLabel" />
+    </div>
+
+    <label for="ControlName" class="hideControl">Name</label>
+    <input type="text" class="form-control ControlName hideControl" id="ControlName" placeholder="Control name" ondrag="return false" ondrop="return false" onpaste="return false" onkeydown="return alphabetsAndNumericOnly(event);">
+
+    <label class="pad10" for="Tooltip">Tooltip</label>&nbsp;
+    <span class="erroralert" style="display:none;">*</span>
+    <input type="text" class="form-control Tooltip" id="txtTooltip" placeholder="Tooltip" maxlength="50" onkeydown="return alphanumericWithSpecialCharacter(event);">
+    <div id="dvDropDowntooltip" class="erroralert" style="display:none;"></div>
+
+    <label class="pad10" for="txtWidth">Width</label>
+    <input type="text" class="form-control ControlWidth" id="txtWidth" maxlength="4" style="width:110px" placeholder="Control width" onkeydown="return alphanumericWithSpecialCharacter(event);">
+
+    <label class="pad10" for="Autofill">Auto fill configuration</label>
+    <input type="checkbox" class="Autofill add_new_checkbox2" id="chkAutofill" text="Autofill" onchange="AutofillChange(this)">
+    <br />
+       
+    <div class="controls" id="autofilloptions" style="display: none;">
+      <div class="rhs-Properties-row">
+        <label for="ddlDbType">Database Type</label><br />
+        <select class="form-control AutoFillDbType" id="ddlDbType" style="width:201px" onchange="dbTypeChange(this)">
+          <option value="MySQL">MySQL</option>
+          <option value="SQL">SQL Server</option>
+          <option value="Oracle">Oracle</option>
+          <option value="IBMDB2">IBM Db2</option>
+        </select>
+      </div>
+      <div class="rhs-Properties-row">
+        <label for="txtServerName">Server Name</label>
+        <input type="text" class="form-control AutoFillServer" id="txtServerName" maxlength="100" style="width:200px" placeholder="Server Name" onkeydown="return alphanumericWithSpecialCharacter(event);">
+      </div>
+      
+      <div id="dvAuthMode" style="display: none;">
+        <div class="rhs-Properties-row">
+          <label for="rblAuthenticationMode">Authentication Mode</label>
+        </div>
+        <div class="rhs-Properties-row">
+          <input type="radio" name="rblAuthenticationMode" id="rblAuthenticationMode" value="Windows" onchange="AuthenticationModeChange(this)"> Windows
+          <input type="radio" name="rblAuthenticationMode" id="rblAuthenticationMode" value="SQL" onchange="AuthenticationModeChange(this)" checked="checked"> SQL
+        </div>
+      </div>
+      <div id="dvPort" class="rhs-Properties-row">
+        <label for="txtPort">Port</label>
+        <input type="text" class="form-control AutoFillPort" id="txtPort" maxlength="100" style="width:200px" placeholder="Port" onkeydown="return numbersOnly(event);">
+      </div>
+
+      <div id="dvUsr">
+        <div class="rhs-Properties-row">
+          <label for="txtUserName">User Name</label>
+          <input type="text" class="form-control AutoFillUserName" id="txtUserName" maxlength="100" style="width:200px" placeholder="User Name" onkeydown="return alphanumericWithSpecialCharacter(event);">
+        </div>
+        <div class="rhs-Properties-row">
+          <label for="txtPassword">Password</label>
+          <input type="password" class="form-control AutoFillPassword" id="txtPassword" maxlength="100" style="width:200px" placeholder="Password" onkeydown="return alphanumericWithSpecialCharacter(event);">
+        </div>
+      </div>
+      <div class="rhs-Properties-row"><a onclick="getAllDatabases();">Test Connection</a></div>
+      <div class="rhs-Properties-row">
+        <label for="ddlDatabase">DataBase Name</label><br />
+        <select class="form-control AutoFillDatabase" id="ddlDatabase" style="width:201px" onchange="onDatabaseSelect()">
+        </select>
+      </div>
+      <div class="rhs-Properties-row">
+        <label for="rblTableSql">Table/SQL Query</label><br />
+        <input type="radio" name="rblTableSql" id="rblTableSql" value="Table" onchange="TableSqlChange(this)" checked="checked"> Table/Column
+        <input type="radio" name="rblTableSql" id="rblTableSql" value="SQLQuery" onchange="TableSqlChange(this)"> SQL Query
+      </div>
+      <div id="divOptTable">
+        <div class="rhs-Properties-row">
+          <label for="ddlTablesList">Table Name</label>
+          <select class="form-control AutoFillTable" id="ddlTablesList" style="width:201px" onchange="onTableSelect()">
+          </select>
+        </div>
+        <div class="rhs-Properties-row">
+          <label for="ddlColumn">Column Name</label>
+          <select class="form-control AutoFillTableColumn" id="ddlColumn" style="width:201px" onchange="onColumnSelect()">
+          </select>
+        </div>
+      </div>
+      <div id="divOptSqlQuery" style="display:none">
+        <div class="rhs-Properties-row">
+          <label for="txtSqlQuery">SQL Query</label>
+          <input type="text" class="form-control AutoFillSqlQuery" id="txtSqlQuery" style="width:200px" placeholder="SQL Query" onkeydown="return alphanumericForSql(event);">
+        </div>
+        <div class="rhs-Properties-row">
+          <a onclick="getSqlQueryValues();">Fetch</a>
+        </div>
+      </div>
+      <div class="rhs-Properties-row">
+        <label for="ddlColValues">Options</label>
+        <select class="form-control" id="ddlColValues" style="width:201px">
+        </select>
+      </div>
+    </div>
+
+      <div class="pad10 multi_radio_btn">
+
+        <label class="form-check-label radio" for="rdbDdl">
+          <input type="radio" name="rdbDdl" id="rdbDdl" value="Ascending" checked="checked" style="margin: 4px 3px 3px 0px;">Asc
+        </label>
+
+        <label class="radio" for="rdbDdl">
+          <input type="radio" name="rdbDdl" id="rdbDdl" value="Descending" style="margin: 4px 3px 3px 0px;">Desc
+        </label>
+        <label class="radio" for="rdbDdl">
+          <input type="radio" name="rdbDdl" id="rdbDdl" value="None" style="margin: 4px 3px 3px 0px;">None
+        </label>
+      </div>
+      <div class="controls" id="customoptions" style="display: block;">
+        <label class="pad10" for="select-1">Option Data Type:</label>
+        <select class="form-control DataType" id="select" style="width:120px" onfocus="getSelectedDataType(this)" onchange="onDataTypeChange(this)">
+          <!--option value="Select">Select</option-->
+          <option value="Alpha">Alpha</option>
+          <option value="AlphaNumeric">AlphaNumeric</option>
+          <option value="FreeText">Free Text</option>
+          <option value="Numeric">Numeric</option>
+          <!--<option value="Decimal">Decimal</option>-->
+          <!--<option value="Date">Date</option>-->
+        </select>
+        <input id="hdnDataType" name="hdnDataType" type="hidden" value="">
+        <label class="pad10" for="Options">Options:</label>
+        <div class="sortable-options-wrap">
+          <ol class="sortable-options ui-sortable DropDownListProp">
+            <li class="ui-sortable-handle">
+              <input class="option-label" value="None" name="radio-group-option" maxlength="10" placeholder="Value" type="text" style="width:115px">
+
+            </li>
+            <li class="">
+              <input type="text" class="option-label" value="" name="radio-group-option" placeholder="Value" style="width:115px" onkeydown=" return alphanumericWithSpecialCharacter(event);">&nbsp;
+              <span class="erroralert">*</span>
+              <!--input class="option-value" value="" name="radio-group-option" placeholder="Value" type="text" style="width:115px"-->
+
+              <a class="remove btn" title="Remove Element" onclick="removeLi(this);">×</a>
+              <div class="erroralert" style="display:none;"></div>
+            </li>
+          </ol>
+          <div class="option-actions">
+            <!--a class="add add-opt">Add Option +</a-->
+            <button type="button" class="btn ng-binding" onclick="addControlOption(this)">Add Value</button>
+          </div>
+        </div>
+      </div>
+
+      <label class="pad10 add_new_checkbox1" for="Required">Required</label>
+      <input type="checkbox" class="Required" id="chkRequired" text="Required">
+      <br />
+      <!--label for="Autofill">Add display logic</label>
+  <input type="checkbox" class="Autofill" style="height:15px;width:15px;" id="chkDisplayLogiv" text="Autofill" onchange="AutofillChange(this)"><br /-->
+      <!--label for="SectionName">SectionName</label>
+  <input type="text" class="form-control SectionName" id="txtSectionName" placeholder="Enter Section Name"-->
+    </div>
+  </script>
+
+  <script id="multiSelectPropertiesTemplate" type="text/x-jquery-tmpl">
+    <div class="form-group col-md-12">
+      <label for="txtLabelText">Label</label>&nbsp;
+      <span class="erroralert">*</span>
+      <input type="text" class="form-control LabelText" id="txtLabelText" placeholder="Label text" maxlength="50" onkeydown="return alphanumericWithSpecialCharacterForLabel(event);">
+      <div id="dvMultiSelectlbl" class="erroralert" style="display:none;"></div>
+      <div>
+        <label class="pad10" for="ShowLabel" class="pad10 add_new_checkbox1">Show Label</label>
+        <input type="checkbox" class="ShowLabel" id="chkShowLabel" />
+      </div>
+
+      <label for="ControlName" class="hideControl">Name</label>
+      <input type="text" class="form-control ControlName hideControl" id="ControlName" placeholder="Control name" ondrag="return false" ondrop="return false" onpaste="return false" onkeydown="return alphabetsAndNumericOnly(event);">
+
+      <label class="pad10" for="Tooltip">Tooltip</label>&nbsp;
+      <span class="erroralert" style="display:none;">*</span>
+      <input type="text" class="form-control Tooltip" id="txtTooltip" placeholder="Tooltip" onkeydown="return alphanumericWithSpecialCharacter(event);">
+      <div id="dvMultiSelecttooltip" class="erroralert" style="display:none;"></div>
+
+      <label class="pad10" for="txtWidth">Width</label>
+      <input type="text" class="form-control ControlWidth" id="txtWidth" maxlength="4" style="width:110px" placeholder="Control width" onkeydown="return alphanumericWithSpecialCharacter(event);">
+
+      <label class="pad10" for="Autofill">Auto fill configuration</label>
+      <input type="checkbox" class="Autofill add_new_checkbox2" id="chkAutofill" text="Autofill" onchange="AutofillChange(this)">
+      <br />
+
+      <div class="controls" id="autofilloptions" style="display: none;">
+        <div class="rhs-Properties-row">
+          <label for="ddlDbType">Database Type</label><br />
+          <select class="form-control AutoFillDbType" id="ddlDbType" style="width:201px" onchange="dbTypeChange(this)">
+            <option value="MySQL">MySQL</option>
+            <option value="SQL">SQL Server</option>
+            <option value="Oracle">Oracle</option>
+            <option value="IBMDB2">IBM Db2</option>
+          </select>
+        </div>
+
+        <div class="rhs-Properties-row">
+          <label for="txtServerName">Server Name</label>
+          <input type="text" class="form-control AutoFillServer" id="txtServerName" maxlength="100" style="width:200px" placeholder="Server Name" onkeydown="return alphanumericWithSpecialCharacter(event);">
+        </div>
+        <div id="dvAuthMode" style="display: none;">
+          <div class="rhs-Properties-row">
+            <label for="rblAuthenticationMode">Authentication Mode</label>
+          </div>
+          <div class="rhs-Properties-row">
+            <input type="radio" name="rblAuthenticationMode" id="rblAuthenticationMode" value="Windows" onchange="AuthenticationModeChange(this)"> Windows
+            <input type="radio" name="rblAuthenticationMode" id="rblAuthenticationMode" value="SQL" onchange="AuthenticationModeChange(this)" checked="checked"> SQL
+          </div>
+        </div>
+
+        <div id="dvPort" class="rhs-Properties-row">
+          <label for="txtPort">Port</label>
+          <input type="text" class="form-control AutoFillPort" id="txtPort" maxlength="100" style="width:200px" placeholder="Port" onkeydown="return numbersOnly(event);">
+        </div>
+
+        <div id="dvUsr">
+          <div class="rhs-Properties-row">
+            <label for="txtUserName">User Name</label>
+            <input type="text" class="form-control AutoFillUserName" id="txtUserName" maxlength="100" style="width:200px" placeholder="User Name" onkeydown="return alphanumericWithSpecialCharacter(event);">
+          </div>
+          <div class="rhs-Properties-row">
+            <label for="txtPassword">Password</label>
+            <input type="password" class="form-control AutoFillPassword" id="txtPassword" maxlength="100" style="width:200px" placeholder="Password" onkeydown="return alphanumericWithSpecialCharacter(event);">
+          </div>
+        </div>
+
+
+        <div class="rhs-Properties-row"><a onclick="getAllDatabases();">Test Connection</a></div>
+        <div class="rhs-Properties-row">
+          <label for="ddlDatabase">DataBase Name</label>
+          <select class="form-control AutoFillDatabase" id="ddlDatabase" style="width:201px" onchange="onDatabaseSelect()">
+          </select>
+        </div>
+        <div class="rhs-Properties-row">
+          <label for="rblTableSql">Table/SQL Query</label>
+        </div>
+        <div class="rhs-Properties-row">
+          <input type="radio" name="rblTableSql" id="rblTableSql" value="Table" onchange="TableSqlChange(this)" checked="checked"> Table/Column
+          <input type="radio" name="rblTableSql" id="rblTableSql" value="SQLQuery" onchange="TableSqlChange(this)"> SQL Query
+        </div>
+        <div id="divOptTable">
+          <div class="rhs-Properties-row">
+            <label for="ddlTablesList">Table Name</label>
+            <select class="form-control AutoFillTable" id="ddlTablesList" style="width:201px" onchange="onTableSelect()">
+            </select>
+          </div>
+          <div class="rhs-Properties-row">
+            <label for="ddlColumn">Column Name</label>
+            <select class="form-control AutoFillTableColumn" id="ddlColumn" style="width:201px" onchange="onColumnSelect()">
+            </select>
+          </div>
+        </div>
+        <div id="divOptSqlQuery" style="display:none">
+          <div class="rhs-Properties-row">
+            <label for="txtSqlQuery">SQL Query</label>
+            <input type="text" class="form-control AutoFillSqlQuery" id="txtSqlQuery" style="width:200px" placeholder="SQL Query" onkeydown="return alphanumericForSql(event);">
+            <div class="rhs-Properties-row">
+              <a onclick="getSqlQueryValues();">Fetch</a>
+            </div>
+          </div>
+        </div>
+        <div class="rhs-Properties-row">
+          <label for="ddlColValues">Options</label>
+          <select class="form-control" id="ddlColValues" style="width:201px">
+          </select>
+        </div>
+      </div>
+
+        <div class="pad10 multi_radio_btn">
+
+          <label class="form-check-label radio" for="rdbMSel">
+            <input type="radio" name="rdbMSel" id="rdbMSel" value="Ascending" checked="checked" style="margin: 4px 3px 3px 0px;">Asc
+          </label>
+
+          <label class="radio" for="rdbMSel">
+            <input type="radio" name="rdbMSel" id="rdbMSel" value="Descending" style="margin: 4px 3px 3px 0px;">Desc
+          </label>
+          <label class="radio" for="rdbMSel">
+            <input type="radio" name="rdbMSel" id="rdbMSel" value="None" style="margin: 4px 3px 3px 0px;">None
+          </label>
+        </div>
+        <div class="controls" id="customoptions" style="display: block;">
+          <label class="pad10" for="select-1">Option Data Type:</label>
+          <select class="form-control DataType" id="select" style="width:120px" onfocus="getSelectedDataType(this)" onchange="onDataTypeChange(this)">
+            <!--option value="Select">Select</option-->
+            <option value="Alpha">Alpha</option>
+            <option value="AlphaNumeric">AlphaNumeric</option>
+            <option value="FreeText">Free Text</option>
+            <option value="Numeric">Numeric</option>
+            <!--<option value="Decimal">Decimal</option>
+      <option value="Date">Date</option>-->
+          </select>
+          <input id="hdnDataType" name="hdnDataType" type="hidden" value="">
+          <label class="pad10" for="Options">Options:</label>
+          <div class="sortable-options-wrap">
+            <ol class="sortable-options ui-sortable MultiSelectProp">
+              <li class="ui-sortable-handle">
+                <input class="option-label" value="None" name="radio-group-option" placeholder="Value" type="text" style="width:115px">
+              </li>
+              <li class="">
+                <input type="text" class="option-label" value="" name="radio-group-option" placeholder="Value" style="width:115px" onkeydown=" return alphanumericWithSpecialCharacter(event);">&nbsp;
+                <span class="erroralert">*</span>
+                <!--input class="option-value" value="" name="radio-group-option" placeholder="Value" type="text" style="width:115px"-->
+                <a class="remove btn" title="Remove Element" onclick="removeLi(this);">×</a>
+                <div class="erroralert" style="display:none;"></div>
+              </li>
+            </ol>
+            <div class="option-actions">
+              <!--a class="add add-opt">Add Option +</a-->
+              <button type="button" class="btn ng-binding" onclick="addControlOption(this)">Add Value</button>
+            </div>
+          </div>
+        </div>
+
+        <label class="pad10 add_new_checkbox1" for="Required">Required</label>
+        <input type="checkbox" class="Required" id="chkRequired" text="Required">
+        <br />
+        <!--label for="Autofill">Add display logic</label>
+  <input type="checkbox" class="Autofill" style="height:15px;width:15px;" id="chkDisplayLogiv" text="Autofill" onchange="AutofillChange(this)"><br /-->
+        <!--label for="SectionName">SectionName</label>
+  <input type="text" class="form-control SectionName" id="txtSectionName" placeholder="Enter Section Name"-->
+      </div>
+  </script>
+
+  <script id="radioPropertiesTemplate" type="text/x-jquery-tmpl">
+    <div class="form-group col-md-12">
+      <label for="txtLabelText">Label</label>&nbsp;
+      <span class="erroralert">*</span>
+      <input type="text" class="form-control LabelText" id="txtLabelText" placeholder="Label text" maxlength="50" onkeydown="return alphanumericWithSpecialCharacterForLabel(event);">
+      <div id="dvradiolbl" class="erroralert" style="display:none;"></div>
+      <div>
+        <label class="pad10" for="ShowLabel" class="pad10 add_new_checkbox1">Show Label</label>
+        <input type="checkbox" class="ShowLabel" id="chkShowLabel" />
+      </div>
+      <label for="ControlName" class="hideControl">Name</label>
+      <input type="text" class="form-control ControlName hideControl" id="ControlName" placeholder="Control name" ondrag="return false" ondrop="return false" onpaste="return false" onkeydown="return alphabetsAndNumericOnly(event);">
+
+      <label class="pad10" for="Tooltip">Tooltip</label>&nbsp;
+      <span class="erroralert" style="display:none;">*</span>
+      <input type="text" class="form-control Tooltip" id="txtTooltip" placeholder="Tooltip" maxlength="50" onkeydown="return alphanumericWithSpecialCharacter(event);">
+      <div id="dvradiotooltip" class="erroralert" style="display:none;"></div>
+
+      <label class="pad10" for="Autofill">Auto fill configuration</label>
+      <input type="checkbox" class="Autofill add_new_checkbox2" id="chkAutofill" text="Autofill" onchange="AutofillChange(this)">
+      <br />
+
+      <div class="controls" id="autofilloptions" style="display: none;">
+        <div class="rhs-Properties-row">
+          <label for="ddlDbType">Database Type</label><br />
+          <select class="form-control AutoFillDbType" id="ddlDbType" style="width:201px" onchange="dbTypeChange(this)">
+            <option value="MySQL">MySQL</option>
+            <option value="SQL">SQL Server</option>
+            <option value="Oracle">Oracle</option>
+            <option value="IBMDB2">IBM Db2</option>
+          </select>
+        </div>
+        <div class="rhs-Properties-row">
+          <label for="txtServerName">Server Name</label>
+          <input type="text" class="form-control AutoFillServer" id="txtServerName" maxlength="100" style="width:200px" placeholder="Server Name" onkeydown="return alphanumericWithSpecialCharacter(event);">
+        </div>
+        <div id="dvAuthMode" style="display: none;">
+          <div class="rhs-Properties-row">
+            <label for="rblAuthenticationMode">Authentication Mode</label>
+          </div>
+          <div class="rhs-Properties-row">
+            <input type="radio" name="rblAuthenticationMode" id="rblAuthenticationMode" value="Windows" onchange="AuthenticationModeChange(this)"> Windows
+            <input type="radio" name="rblAuthenticationMode" id="rblAuthenticationMode" value="SQL" onchange="AuthenticationModeChange(this)" checked="checked"> SQL
+          </div>
+        </div>
+        <div id="dvPort" class="rhs-Properties-row">
+          <label for="txtPort">Port</label>
+          <input type="text" class="form-control AutoFillPort" id="txtPort" maxlength="100" style="width:200px" placeholder="Port" onkeydown="return numbersOnly(event);">
+        </div>
+
+        <div id="dvUsr">
+          <div class="rhs-Properties-row">
+            <label for="txtUserName">User Name</label>
+            <input type="text" class="form-control AutoFillUserName" id="txtUserName" maxlength="100" style="width:200px" placeholder="User Name" onkeydown="return alphanumericWithSpecialCharacter(event);">
+          </div>
+          <div class="rhs-Properties-row">
+            <label for="txtPassword">Password</label>
+            <input type="password" class="form-control AutoFillPassword" id="txtPassword" maxlength="100" style="width:200px" placeholder="Password" onkeydown="return alphanumericWithSpecialCharacter(event);">
+          </div>
+        </div>
+        <div class="rhs-Properties-row"><a onclick="getAllDatabases();">Test Connection</a></div>
+        <div class="rhs-Properties-row">
+          <label for="ddlDatabase">DataBase Name</label>
+          <select class="form-control AutoFillDatabase" id="ddlDatabase" style="width:201px" onchange="onDatabaseSelect()">
+          </select>
+        </div>
+        <div class="rhs-Properties-row">
+          <label for="rblTableSql">Table/SQL Query</label>
+        </div>
+        <div class="rhs-Properties-row">
+          <input type="radio" name="rblTableSql" id="rblTableSql" value="Table" onchange="TableSqlChange(this)" checked="checked"> Table/Column
+          <input type="radio" name="rblTableSql" id="rblTableSql" value="SQLQuery" onchange="TableSqlChange(this)"> SQL Query
+        </div>
+        <div id="divOptTable">
+          <div class="rhs-Properties-row">
+            <label for="ddlTablesList">Table Name</label>
+            <select class="form-control AutoFillTable" id="ddlTablesList" style="width:201px" onchange="onTableSelect()">
+            </select>
+          </div>
+          <div class="rhs-Properties-row">
+            <label for="ddlColumn">Column Name</label>
+            <select class="form-control AutoFillTableColumn" id="ddlColumn" style="width:201px" onchange="onColumnSelect()">
+            </select>
+          </div>
+        </div>
+        <div id="divOptSqlQuery" style="display:none">
+          <div class="rhs-Properties-row">
+            <label for="txtSqlQuery">SQL Query</label>
+            <input type="text" class="form-control AutoFillSqlQuery" id="txtSqlQuery" style="width:200px" placeholder="SQL Query" onkeydown="return alphanumericForSql(event);">
+            <a onclick="getSqlQueryValues();">Fetch</a>
+          </div>
+        </div>
+        <div class="rhs-Properties-row">
+          <label for="ddlColValues">Options</label>
+          <select class="form-control" id="ddlColValues" style="width:201px">
+          </select>
+        </div>
+      </div>
+        <div class="controls" id="customoptions" style="display: block;">
+          <label class="pad10" for="select-1">Option Data Type:</label>
+          <select class="form-control DataType" id="select" style="width:120px" onfocus="getSelectedDataType(this)" onchange="onDataTypeChange(this)">
+            <option value="Alpha">Alpha</option>
+            <option value="AlphaNumeric">AlphaNumeric</option>
+            <option value="FreeText">Free Text</option>
+            <option value="Numeric">Numeric</option>
+            <!--<option value="Decimal">Decimal</option>
+      <option value="Date">Date</option>-->
+          </select>
+          <input id="hdnDataType" name="hdnDataType" type="hidden" value="">
+
+          <label class="pad10" for="Options">Options:</label>
+          <div class="sortable-options-wrap">
+            <ol class="sortable-options ui-sortable RadioGroupProp">
+              <li class="ui-sortable-handle">
+                <input class="option-label" value="Option 1" name="radio-group-option" maxlength="10" placeholder="Value" type="text" style="width:115px">
+                <!--input class="option-value" value="option-1" name="radio-group-option" placeholder="Value" type="text" style="width:115px"-->
+                <a class="remove btn" title="Remove Element" onclick="removeLi(this);">×</a>
+              </li>
+              <li class="">
+                <input type="text" class="option-label" value="" name="radio-group-option" placeholder="Value" style="width:115px" onkeydown=" return alphanumericWithSpecialCharacter(event);">&nbsp;
+                <span class="erroralert">*</span>
+                <!--input class="option-value" value="" name="radio-group-option" placeholder="Value" type="text" style="width:115px"-->
+                <a class="remove btn" title="Remove Element" onclick="removeLi(this);">×</a>
+                <div class="erroralert" style="display:none;"></div>
+              </li>
+            </ol>
+            <div class="option-actions">
+              <!--a class="add add-opt">Add Option +</a-->
+              <button type="button" class="btn ng-binding" onclick="addControlOption(this)">Add Value</button>
+            </div>
+          </div>
+        </div>
+
+        <label class="pad10 add_new_checkbox1" for="Required">Required</label>
+        <input type="checkbox" class="Required" id="chkRequired" text="Required">
+        <br />
+
+        <!--label for="SectionName">SectionName</label>
+  <input type="text" class="form-control SectionName" id="txtSectionName" placeholder="Enter Section Name"-->
+      </div>
+  </script>
+
+  <script id="checkBoxPropertiesTemplate" type="text/x-jquery-tmpl">
+    <div class="form-group col-md-12">
+      <label for="txtLabelText">Label</label>&nbsp;
+      <span class="erroralert">*</span>
+      <input type="text" class="form-control LabelText" id="txtLabelText" placeholder="Label text" maxlength="50" onkeydown="return alphanumericWithSpecialCharacterForLabel(event);">
+      <div id="dvCheckBoxlbl" class="erroralert" style="display:none;"></div>
+      <div>
+        <label class="pad10" for="ShowLabel" class="pad10 add_new_checkbox1">Show Label</label>
+        <input type="checkbox" class="ShowLabel" id="chkShowLabel" />
+      </div>
+      <label for="ControlName" class="hideControl">Name</label>
+      <input type="text" class="form-control ControlName hideControl" id="ControlName" placeholder="Control name" ondrag="return false" ondrop="return false" onpaste="return false" onkeydown="return alphabetsAndNumericOnly(event);">
+
+      <label class="pad10" for="Tooltip">Tooltip</label>&nbsp;
+      <span class="erroralert" style="display:none;">*</span>
+      <input type="text" class="form-control Tooltip" id="txtTooltip" placeholder="Tooltip" maxlength="50" onkeydown="return alphanumericWithSpecialCharacter(event);">
+      <div id="dvCheckBoxtooltip" class="erroralert" style="display:none;"></div>
+
+      <label class="pad10" for="Autofill">Auto fill configuration</label>
+      <input type="checkbox" class="Autofill add_new_checkbox" id="chkAutofill" text="Autofill" onchange="AutofillChange(this)">
+      <br />
+
+      <div class="controls" id="autofilloptions" style="display: none;">
+        <div class="rhs-Properties-row">
+          <label for="ddlDbType">Database Type</label><br />
+          <select class="form-control AutoFillDbType" id="ddlDbType" style="width:201px" onchange="dbTypeChange(this)">
+            <option value="MySQL">MySQL</option>
+            <option value="SQL">SQL Server</option>
+            <option value="Oracle">Oracle</option>
+            <option value="IBMDB2">IBM Db2</option>
+          </select>
+        </div>
+        <div class="rhs-Properties-row">
+
+          <label for="txtServerName">Server Name</label>
+          <input type="text" class="form-control AutoFillServer" id="txtServerName" maxlength="100" style="width:200px" placeholder="Server Name" onkeydown="return alphanumericWithSpecialCharacter(event);">
+        </div>
+        <div id="dvAuthMode" style="display: none;">
+          <div class="rhs-Properties-row">
+            <label for="rblAuthenticationMode">Authentication Mode</label>
+          </div>
+          <div class="rhs-Properties-row">
+            <input type="radio" name="rblAuthenticationMode" id="rblAuthenticationMode" value="Windows" onchange="AuthenticationModeChange(this)"> Windows
+            <input type="radio" name="rblAuthenticationMode" id="rblAuthenticationMode" value="SQL" onchange="AuthenticationModeChange(this)" checked="checked"> SQL
+          </div>
+        </div>
+        <div id="dvPort" class="rhs-Properties-row">
+          <label for="txtPort">Port</label>
+          <input type="text" class="form-control AutoFillPort" id="txtPort" maxlength="100" style="width:200px" placeholder="Port" onkeydown="return numbersOnly(event);">
+        </div>
+
+        <div id="dvUsr">
+          <div class="rhs-Properties-row">
+            <label for="txtUserName">User Name</label>
+            <input type="text" class="form-control AutoFillUserName" id="txtUserName" maxlength="100" style="width:200px" placeholder="User Name" onkeydown="return alphanumericWithSpecialCharacter(event);">
+          </div>
+          <div class="rhs-Properties-row">
+            <label for="txtPassword">Password</label>
+            <input type="password" class="form-control AutoFillPassword" id="txtPassword" maxlength="100" style="width:200px" placeholder="Password" onkeydown="return alphanumericWithSpecialCharacter(event);">
+          </div>
+        </div>
+        <div class="rhs-Properties-row"><a onclick="getAllDatabases();">Test Connection</a></div>
+        <div class="rhs-Properties-row">
+          <label for="ddlDatabase">DataBase Name</label>
+          <select class="form-control AutoFillDatabase" id="ddlDatabase" style="width:201px" onchange="onDatabaseSelect()">
+          </select>
+        </div>
+        <div class="rhs-Properties-row">
+          <label for="rblTableSql">Table/SQL Query</label>
+        </div>
+        <div class="rhs-Properties-row">
+          <input type="radio" name="rblTableSql" id="rblTableSql" value="Table" onchange="TableSqlChange(this)" checked="checked"> Table/Column
+          <input type="radio" name="rblTableSql" id="rblTableSql" value="SQLQuery" onchange="TableSqlChange(this)"> SQL Query
+        </div>
+      
+        <div id="divOptTable">
+          <div class="rhs-Properties-row">
+            <label for="ddlTablesList">Table Name</label>
+            <select class="form-control AutoFillTable" id="ddlTablesList" style="width:201px" onchange="onTableSelect()">
+            </select>
+          </div>
+          <div class="rhs-Properties-row">
+            <label for="ddlColumn">Column Name</label>
+            <select class="form-control AutoFillTableColumn" id="ddlColumn" style="width:201px" onchange="onColumnSelect()">
+            </select>
+          </div>
+        </div>
+        <div id="divOptSqlQuery" style="display:none">
+          <div class="rhs-Properties-row">
+            <label for="txtSqlQuery">SQL Query</label>
+            <input type="text" class="form-control AutoFillSqlQuery" id="txtSqlQuery" style="width:200px" placeholder="SQL Query" onkeydown="return alphanumericForSql(event);">
+          </div>
+          <div class="rhs-Properties-row">
+            <a onclick="getSqlQueryValues();">Fetch</a>
+          </div>
+        </div>
+        <div class="rhs-Properties-row">
+          <label for="ddlColValues">Options</label>
+          <select class="form-control" id="ddlColValues" style="width:201px">
+          </select>
+        </div>
+      </div>
+        <div class="controls" id="customoptions" style="display: block;">
+          <label class="pad10" for="select-1">Option Data Type:</label>
+          <select class="form-control DataType" id="select" style="width:120px" onfocus="getSelectedDataType(this)" onchange="onDataTypeChange(this)">
+            <option value="Alpha">Alpha</option>
+            <option value="AlphaNumeric">AlphaNumeric</option>
+            <option value="FreeText">Free Text</option>
+            <option value="Numeric">Numeric</option>
+            <!--<option value="Decimal">Decimal</option>
+      <option value="Date">Date</option>-->
+          </select>
+          <input id="hdnDataType" name="hdnDataType" type="hidden" value="">
+          <label class="pad10" for="Options">Options:</label>
+          <div class="sortable-options-wrap">
+            <ol class="sortable-options ui-sortable CheckBoxListProp"></ol>
+            <div class="option-actions">
+              <!--a class="add add-opt">Add Option +</a-->
+              <button type="button" class="btn ng-binding" onclick="addControlOption(this)">Add Value</button>
+            </div>
+          </div>
+        </div>
+
+        <label class="pad10 add_new_checkbox1" for="Required">Required</label>
+        <input type="checkbox" class="Required" id="chkRequired" text="Required">
+        <br />
+
+        <!--label for="SectionName">SectionName</label>
+  <input type="text" class="form-control SectionName" id="txtSectionName" placeholder="Enter Section Name"-->
+      </div>
+  </script>
+
+  <script id="pageHeaderPropertiesTemplate" type="text/x-jquery-tmpl">
+    <div class="form-group col-md-12">
+      <label for="txtHeaderText">Header</label>&nbsp;
+      <span class="erroralert">*</span>
+      <input type="text" class="form-control HeaderText" id="txtHeaderText" placeholder="Label text" maxlength="50" onkeydown="return alphanumericWithSpecialCharacterForLabel($(this).val());">
+      <label class="pad10" for="Type">Type:</label>
+      <select class="form-control" id="Type">
+        <option value="H1">H1</option>
+        <option value="H2">H2</option>
+        <option value="H3">H3</option>
+        <option value="H4">H4</option>
+        <option value="H5">H5</option>
+        <option value="H6">H6</option>
+      </select>
+      <label class="pad10" for="TextAlign">Text Align:</label>
+      <select class="form-control" id="TextAlign">
+        <option value="center">Center</option>
+        <option value="right">Right</option>
+        <option value="left">Left</option>
+      </select>
+      <label for="ImageAlign">Image Align:</label>
+      <select class="form-control" id="ImageAlign">
+        <option value="right">Right</option>
+        <option value="left">Left</option>
+      </select>
+      <label class="pad10" for="txtWidth">Image Width</label>
+      <input type="text" class="form-control ControlWidth" id="txtWidth" maxlength="4" style="width:110px" placeholder="Image Width" onkeydown="return numbersOnly(event);">
+
+      <label class="pad10" for="txtWidth">Image Height</label>
+      <input type="text" class="form-control ControlHeight" id="txtHeight" maxlength="4" style="width:110px" placeholder="Image Height" onkeydown="return numbersOnly(event);">
+
+
+      <label for="imageFile">Header Image</label>
+      <div class="file-loading">
+        <input type='file' id="imageFile" onchange="readURL(this);" />
+      </div>
+      <div class="row" style="padding-top:2px">
+        <div class="col-sm-4">
+          <img id="HeaderImage" src="#" style="width:100px;height:100px;" />
+          <p id="ImageSize">Image Size:</p>
+
+        </div>
+
+        <div class="col-sm-8 " style="vertical-align:middle">
+          <a class="remove-Image " style="vertical-align:middle" onclick="RemoveHeaderImage();">Remove</a>
+        </div>
+      </div>
+      <div class="row text-warning " style="padding-top:2px" id="Imagewarning">
+
+      </div>
+    </div>
+  </script>
+
+  <script id="headerPropertiesTemplate" type="text/x-jquery-tmpl">
+    <div class="form-group col-md-12">
+      <label for="txtHeaderText">Header</label>&nbsp;
+      <span class="erroralert">*</span>
+      <input type="text" class="form-control HeaderText" id="txtHeaderText" placeholder="Label text" maxlength="50" onkeydown="return alphanumericWithSpecialCharacterForLabel(event);">
+      <div id="dvHeaderlbl" class="erroralert" style="display:none;"></div>
+      <label class="pad10" for="Type">Type:</label>
+      <select class="form-control " id="Type">
+        <option value="H1">H1</option>
+        <option value="H2">H2</option>
+        <option value="H3">H3</option>
+        <option value="H4">H4</option>
+        <option value="H5">H5</option>
+        <option value="H6">H6</option>
+      </select>
+      <label class="pad10" for="TextAlign">Text Align:</label>
+      <select class="form-control " id="TextAlign">
+        <option value="left">Left</option>
+        <option value="right">Right</option>
+        <option value="center">Center</option>
+      </select>
+    </div>
+  </script>
+
+  <script id="CalendarPropertiesTemplate" type="text/x-jquery-tmpl">
+    <div class="form-group col-md-12">
+      <label for="txtLabelText">Label</label>&nbsp;
+      <span class="erroralert">*</span>
+      <input type="text" class="form-control LabelText" id="txtLabelText" placeholder="Label text" maxlength="50" onkeydown="return alphanumericWithSpecialCharacterForLabel(event);">
+      <div id="dvCalendarlbl" class="erroralert" style="display:none;"></div>
+      <div>
+        <label class="pad10" for="ShowLabel" class="pad10 add_new_checkbox1">Show Label</label>
+        <input type="checkbox" class="ShowLabel" id="chkShowLabel" />
+      </div>
+      <label for="TextBoxName" class="hideControl">Name</label>
+      <input type="text" class="form-control ControlName hideControl" id="TextBoxName" placeholder="Control name" ondrag="return false" ondrop="return false" onpaste="return false" onkeydown="return alphabetsAndNumericOnly(event);">
+
+      <label class="pad10" for="placeholder">Watermark</label>&nbsp;
+      <span class="erroralert">*</span>
+      <input type="text" class="form-control TextBoxPlaceholder" id="txtplaceholder" placeholder="Enter a date" maxlength="50" onkeydown="return alphanumericWithSpecialCharacter(event);">
+      <div id="dvCalendarplaceholder" class="erroralert" style="display:none;"></div>
+
+      <label class="pad10" for="Tooltip">Tooltip</label>&nbsp;
+      <span class="erroralert" style="display:none;">*</span>
+      <input type="text" class="form-control Tooltip" id="txtTooltip" placeholder="Tooltip" maxlength="50" onkeydown="return alphanumericWithSpecialCharacter(event);">
+      <div id="dvCalendartooltip" class="erroralert" style="display:none;"></div>
+
+      <label class="pad10" for="Autofill">Auto fill configuration</label>
+      <input type="checkbox" class="Autofill add_new_checkbox2" id="chkAutofill" text="Autofill" onchange="AutofillChangeCalendar(this)">
+
+     
+      <label class="pad10" for="txtWidth">Width</label>
+      <input type="text" class="form-control ControlWidth" id="txtWidth" maxlength="4" style="width:110px" placeholder="Control width" onkeydown="return numbersOnly(event);">
+
+      <label class="pad10 add_new_checkbox1" for="Required">Required</label>
+      <input type="checkbox" class="Required" id="chkRequired" />
+      <label class="pad10 add_new_checkbox1" forfor="Required">Disabled</label>
+      <input type="checkbox" class="Disabled" id="chkDisabled" />
+      <br />
+      <div class="controls" id="customCal">
+        <div class="input-append date form_datetime">
+          <div id="dvStartEndDate" class="erroralert" style="display:none;"></div>
+          <label class="pad10" for="txtMinValue">Start Date</label>
+          <input type="text" class="form-control MinValue" id="txtMinValue" maxlength="10" style="width:130px" placeholder="Start Date">
+        </div>
+        <label class="pad10" for="txtMaxValue">End Date</label>
+        <input type="text" class="form-control MaxValue" id="txtMaxValue" maxlength="10" style="width:130px" placeholder="End Date">
+      </div>
+     
+
+    </div>
+</script>
+
+  <script id="buttonPropertiesTemplate" type="text/x-jquery-tmpl">
+    <div class="form-group col-md-12">
+      <!--<label for="txtLabelText">Label</label>
+      <input type="text"
+             class="form-control LabelText"
+             id="txtLabelText"
+             placeholder="Label text"
+             maxlength="50"
+             onkeydown="return alphanumericWithSpecialCharacter(event);">
+      <div id="dvbuttonlbl" class="erroralert" style="display:none;"></div>-->
+      <label class="pad10" for="TextBoxName">Button Name</label>
+      <input type="text"
+             class="form-control ButtonName ButtonControlName"
+             id="TextBoxName"
+             maxlength="50"
+             placeholder="Button name"
+             ondrag="return false"
+             ondrop="return false"
+             onpaste="return false"
+             onkeydown="return alphabetsAndNumericOnly(event);">
+      <div id="dvbuttonname" class="erroralert" style="display:none;"></div>
+      <label class="pad10" for="ButtonType">Button Type</label>
+      <select class="form-control" id="ButtonType">
+        <option value="button">Button</option>
+        <option value="reset">Reset</option>
+        <option value="submit">Submit</option>
+      </select>
+      <label class="pad10" for="ButtonColor">Button Color</label>
+      <select class="form-control" id="ButtonColor">
+        <option value="btn btn-default">Default</option>
+        <option value="btn btn-primary">Primary</option>
+        <option value="btn btn-info">Info</option>
+        <option value="btn btn-success">Success</option>
+        <option value="btn btn-warning">Warning</option>
+        <option value="btn btn-danger">Danger</option>
+        <option value="btn btn-inverse">Inverse</option>
+      </select>
+      <label class="pad10" for="Tooltip">Tooltip</label>&nbsp;
+      <input type="text" class="form-control Tooltip" id="txtTooltip" maxlength="50" placeholder="Tooltip" onkeydown="return alphanumericWithSpecialCharacter(event);">
+      <div id="dvbuttontooltip" class="erroralert" style="display:none;"></div>
+
+      <!--<label class="pad10 add_new_checkbox1" for="Required">Required</label> <input type="checkbox" class="Required" id="chkRequired" text="Required" />-->
+    </div>
+  </script>
+  <script id="pageTabPropertiesTemplate" type="text/x-jquery-tmpl">
+
+    <div class="form-group col-md-12">
+      <label for="txtTabHeaderText" style="display:none;">Tab Header</label>&nbsp;
+      <span class="erroralert">*</span>
+      <input type="text" class="form-control LabelText" style="display:none;" id="txtTabHeaderText" maxlength="50" placeholder="Label text" onkeydown="return alphanumericWithSpecialCharacterForLabel(event);">
+      <div id="dvTablbl" class="erroralert" style="display:none;"></div>
+
+      <label class="pad10" for="Options">Tab Options:</label>
+      <div class="sortable-options-wrap">
+        <ol class="sortable-options ui-sortable TabListProp"></ol>
+        <div class="option-actions">
+          <!--a class="add add-opt">Add Option +</a-->
+          <button type="button" class="btn ng-binding" onclick="addControlOption(this)">Add Tab</button>
+        </div>
+      </div>
+    </div>
+  </script>
+
+  <script id="pageGridPropertiesTemplate" type="text/x-jquery-tmpl">
+
+    <div class="form-group col-md-12">
+      <label for="txtTabHeaderText" style="display: none;">Grid Header</label>
+      <input type="text" class="form-control LabelText" id="txtGridHeaderText" style="display: none;" placeholder="Label text" onkeydown="return alphanumericWithSpecialCharacterForLabel(event);">
+      <div id="dvGridlbl" class="erroralert" style="display:none;"></div>
+
+      <label for="Options">Columns:</label>&nbsp;
+      <span class="erroralert">*</span>
+      <input type="text" class="form-control LabelText" id="txtGridColumn" maxlength="2" onkeydown="return numbersOnly(event);">
+      <div id="dvGridcol" class="erroralert" style="display:none;"></div>
+      <br />
+      <label for="Options">Rows:</label>&nbsp;
+      <span class="erroralert">*</span>
+      <input type="text" class="form-control LabelText" id="txtGridRow" maxlength="2" onkeydown="return numbersOnly(event);">
+      <div id="dvGridrow" class="erroralert" style="display:none;"></div>
+    </div>
+  </script>
+
+  <script id="pageTablePropertiesTemplate" type="text/x-jquery-tmpl">
+
+    <div class="form-group col-md-12">
+      <label for="txtTabHeaderText" style="display: none;">Grid Header</label>
+      <input type="text" class="form-control LabelText" id="txtTableHeaderText" style="display: none;" placeholder="Label text" onkeydown="return alphanumericWithSpecialCharacterForLabel(event);">
+      <div id="dvGridlbl" class="erroralert" style="display:none;"></div>
+
+      <label for="Options">Columns:</label>&nbsp;
+      <span class="erroralert">*</span>
+      <div class="sortable-options-wrap">
+        <ol class="sortable-options ui-sortable TableColumnListProp"></ol>
+        <div class="option-actions">
+          <button type="button" class="btn ng-binding" onclick="addControlOption(this)">Add Column</button>
+        </div>
+      </div>
+      <br />
+      <label for="Options">Rows:</label>&nbsp;
+      <span class="erroralert">*</span>
+      <input type="text" class="form-control LabelText" id="txtTableRow" maxlength="4" onkeydown="return numbersOnly(event);">
+      <div id="dvTablerow" class="erroralert" style="display:none;"></div>
+    </div>
+  </script>
+
+  <script id="pageExcelGridPropertiesTemplate" type="text/x-jquery-tmpl">
+
+    <div class="form-group col-md-12">
+      <label for="txtTabHeaderText" style="display: none;">Excel Grid Header</label>
+      <input type="text" class="form-control LabelText" id="txtExcelGridHeaderText" style="display: none;" placeholder="Label text" onkeydown="return alphanumericWithSpecialCharacterForLabel(event);">
+      <div id="dvExcelGridlbl" class="erroralert" style="display:none;"></div>
+
+      <label class="pad10" for="Options">Columns/Type:</label>&nbsp;
+      <span class="erroralert">*</span>
+      <div class="sortable-options-wrap">
+        <ol class="sortable-options ui-sortable ExcelGridColumnListProp"></ol>
+        <div class="option-actions">
+          <button type="button" class="btn ng-binding" onclick="addControlOption(this)">Add Column</button>
+        </div>
+      </div>
+      <br />
+      <label for="Options">Rows:</label>&nbsp;
+      <span class="erroralert">*</span>
+      <input type="text" class="form-control LabelText" id="txtExcelGridRow" maxlength="4" onkeydown="return numbersOnly(event);">
+      <div id="dvExcelGridrow" class="erroralert" style="display:none;"></div>
+    </div>
+  </script>
+  <!--
+      Below is the edit template for Button
+  -->
+<script id="editButtonTemplate" type="text/x-jquery-tmpl">
+  <div class="form-group draggable dropped" data-type="${divDataType}" id="${divId}">
+    <!--<span class="glyphicon conrolimage"><img alt="" class="img-responsive" src="../src/assets/images/button_icon.png"></span>-->
+
+    <label for="${controlId}" style="display:none">${controlId} :</label>
+    <!--<label for="input-text-label">${labelText}</label>-->
+    <input type="${controlType}"
+           class="${classvalue}"
+           value="${buttonName}"
+           id="${controlId}"
+           name="${controlId}"
+           title="${tooltip}"
+           style="display: block;">
+    <!--p class="help-block">Example block-level help text here.</p-->
+    <p class="tools">
+      <a class="edit-link" onclick="showProperties(this);" data-id="${divId}">
+        Edit
+      </a>
+      |
+      <a class="remove-link" onclick="RemoveControl(this)" data-id="${divId}">Remove</a>
+    </p>
+
+  </div>
+
+
+  </script>
+
+  <!--
+      Below is the edit template for TextBox
+  -->
+<script id="editTextboxTemplate" type="text/x-jquery-tmpl">
+  <div class="form-group draggable dropped" data-type="${divDataType}" id="${divId}">
+    <label for="${controlId}" style="display:none">${controlId} :</label>
+    <label for="input-text-label">${labelText}</label>
+    <input type="text" class="form-control controls"
+           id="${controlId}"
+           name="${controlId}"
+           placeholder="${placeholder}"
+           title="${tooltip}"
+           maxlength="${maxLength}"
+           isrequired="${validate.required}"
+           isDisabled="${validate.disabled}"
+           isAutoGenerated="${validate.autoGenerated}"
+           autoGeneratedVal="${validate.autoGeneratedVal}"
+           autoGeneratedValDig="${validate.autoGeneratedValDig}"
+           datatype="${validate.dataType}"
+           min="${validate.minValue}"
+           max="${validate.maxValue}"
+           fieldid="${fieldId}"
+           pattern="${validate.pattern}"
+           isshowlabel="${showlabel}"
+           chkAutofill="${chkAutofill}"
+           AutoFillDbType="${AutoFillDbType}"
+           AutoFillServer="${AutoFillServer}"
+           AutoFillAuthMode="${AutoFillAuthMode}"
+           AutoFillUserName="${AutoFillUserName}"
+           AutoFillPassword="${AutoFillPassword}"
+           AutoFillPort="${AutoFillPort}"
+           AutoFillDatabase="${AutoFillDatabase}"
+           AutoFillTable="${AutoFillTable}"
+           AutoFillTableColumn="${AutoFillTableColumn}"
+           AutoFillSqlQuery="${AutoFillSqlQuery}"
+           AutoFillValue="${AutoFillValue}"
+           style="display: block; width:${width}px;">
+      <!--p class="help-block">Example block-level help text here.</p-->
+      <p class="tools">
+        <a class="edit-link" onclick="showProperties(this);" data-id="${divId}">
+          Edit
+        </a>
+        |
+        <a class="remove-link" onclick="RemoveControl(this)" data-id="${divId}">Remove</a>
+      </p>
+    </div>
+
+  </script>
+  <!--
+      Below is the edit template for CheckBox
+  -->
+  <script id="editCheckBoxTemplate" type="text/x-jquery-tmpl">
+    <div class="form-group draggable dropped" data-type="${divDataType}" id="${divId}">
+      <label for="${controlId}" style="display:none">${controlId} :</label>
+      <label for="input-text-label">${labelText}</label>
+
+      <div class="controls" style="display: block;">
+        {{each options.option}}
+        <label class="checkbox" for="${controlId}">
+          <input type="checkbox"
+                 name="${controlId}"
+                 id="${controlId}"
+                 value="${value}"
+                 isrequired="${validate.required}"
+                 datatype="${validate.dataType}"
+                 title="${tooltip}"
+                 fieldid="${fieldId}"
+                 pattern="${validate.pattern}"
+                 isshowlabel="${showlabel}"
+                  chkAutofill="${chkAutofill}"
+            AutoFillDbType="${AutoFillDbType}"
+            AutoFillServer="${AutoFillServer}"
+            AutoFillAuthMode="${AutoFillAuthMode}"
+            AutoFillUserName="${AutoFillUserName}"
+            AutoFillPassword="${AutoFillPassword}"
+            AutoFillPort="${AutoFillPort}"
+            AutoFillDatabase="${AutoFillDatabase}"
+            AutoFillTable="${AutoFillTable}"
+            AutoFillTableColumn="${AutoFillTableColumn}"
+            AutoFillSqlQuery="${AutoFillSqlQuery}"
+                 ${Checked}
+                 autofillid="${autoFillId}"> ${value}
+        </label>
+        {{/each}}
+      </div>
+      <!--p class="help-block">Example block-level help text here.</p-->
+      <p class="tools">
+        <a class="edit-link" onclick="showProperties(this);" data-id="${divId}">
+          Edit
+        </a>
+        |
+        <a class="remove-link" onclick="RemoveControl(this)" data-id="${divId}">Remove</a>
+      </p>
+    </div>
+  </script>
+  <!--
+      Below is the edit template for Rdio
+  -->
+  <script id="editRadioTemplate" type="text/x-jquery-tmpl">
+    <div class="form-group draggable dropped" data-type="${divDataType}" id="${divId}">
+      <label for="${controlId}" style="display:none">${controlId} :</label>
+      <label for="input-text-label">${labelText}</label>
+
+      <div class="controls" style="display: block;">
+        {{each options.option}}
+        <label class="radio" for="${controlId}">
+          <input type="radio"
+                 name="${controlId}"
+                 id="${controlId}"
+                 value="${value}"
+                 isrequired="${validate.required}"
+                 datatype="${validate.dataType}"
+                 title="${tooltip}"
+                 fieldid="${fieldId}"
+                 pattern="${validate.pattern}"
+                 isshowlabel="${showlabel}"
+                 chkAutofill="${chkAutofill}"
+                AutoFillDbType="${AutoFillDbType}"
+                AutoFillServer="${AutoFillServer}"
+                AutoFillAuthMode="${AutoFillAuthMode}"
+                AutoFillUserName="${AutoFillUserName}"
+                AutoFillPassword="${AutoFillPassword}"
+                AutoFillPort="${AutoFillPort}"
+                AutoFillDatabase="${AutoFillDatabase}"
+                AutoFillTable="${AutoFillTable}"
+                AutoFillTableColumn="${AutoFillTableColumn}"
+                AutoFillSqlQuery="${AutoFillSqlQuery}"
+                 ${Checked}
+                 autofillid="${autoFillId}"> ${value}
+        </label>
+        {{/each}}
+      </div>
+      <!--p class="help-block">Example block-level help text here.</p-->
+      <p class="tools">
+        <a class="edit-link" onclick="showProperties(this);" data-id="${divId}">
+          Edit
+        </a>
+        |
+        <a class="remove-link" onclick="RemoveControl(this)" data-id="${divId}">Remove</a>
+      </p>
+    </div>
+  </script>
+
+  <!--
+      Below is the edit template for DropDownList
+  -->
+<script id="editDropDownListTemplate" type="text/x-jquery-tmpl">
+  <div class="form-group draggable dropped" data-type="${divDataType}" id="${divId}">
+    <label for="${controlId}" style="display:none">${controlId} :</label>
+    <label for="input-text-label">${labelText}</label>
+    <select class="form-control controls"
+            id="${controlId}"
+            name="${controlId}"
+            title="${tooltip}"
+            isrequired="${validate.required}"
+            datatype="${validate.dataType}"
+            fieldid="${fieldId}"
+            pattern="${validate.pattern}"
+            isshowlabel="${showlabel}"
+            optionOrder="${optionOrder}"
+            chkAutofill="${chkAutofill}"
+            AutoFillDbType="${AutoFillDbType}"
+            AutoFillServer="${AutoFillServer}"
+            AutoFillAuthMode="${AutoFillAuthMode}"
+            AutoFillUserName="${AutoFillUserName}"
+            AutoFillPassword="${AutoFillPassword}"
+            AutoFillPort="${AutoFillPort}"
+            AutoFillDatabase="${AutoFillDatabase}"
+            AutoFillTable="${AutoFillTable}"
+            AutoFillTableColumn="${AutoFillTableColumn}"
+            AutoFillSqlQuery="${AutoFillSqlQuery}"
+            style="display: block; width:${width}px;">
+        {{each options.option}}
+        <option fieldid="${fieldId}" autofillid="${autoFillId}" value="${value}">${value}</option>
+        {{/each}}
+      </select>
+      <!--p class="help-block">Example block-level help text here.</p-->
+      <p class="tools">
+        <a class="edit-link" onclick="showProperties(this);" data-id="${divId}">
+          Edit
+        </a>
+        |
+        <a class="remove-link" onclick="RemoveControl(this)" data-id="${divId}">Remove</a>
+      </p>
+    </div>
+  </script>
+
+  <!--
+      Below is the edit template for MultiSelect
+  -->
+<script id="editMultiSelectTemplate" type="text/x-jquery-tmpl">
+  <div class="form-group draggable dropped" data-type="${divDataType}" id="${divId}">
+    <label for="${controlId}" style="display:none">${controlId} :</label>
+    <label for="input-text-label">${labelText}</label>
+    <select class="form-control controls"
+            id="${controlId}"
+            name="${controlId}"
+            title="${tooltip}"
+            isrequired="${validate.required}"
+            datatype="${validate.dataType}"
+            fieldid="${fieldId}"
+            multiple="multiple"
+            pattern="${validate.pattern}"
+            isshowlabel="${showlabel}"
+            optionOrder="${optionOrder}"
+             chkAutofill="${chkAutofill}"
+            AutoFillDbType="${AutoFillDbType}"
+            AutoFillServer="${AutoFillServer}"
+            AutoFillAuthMode="${AutoFillAuthMode}"
+            AutoFillUserName="${AutoFillUserName}"
+            AutoFillPassword="${AutoFillPassword}"
+            AutoFillPort="${AutoFillPort}"
+            AutoFillDatabase="${AutoFillDatabase}"
+            AutoFillTable="${AutoFillTable}"
+            AutoFillTableColumn="${AutoFillTableColumn}"
+            AutoFillSqlQuery="${AutoFillSqlQuery}"
+            style="display: block; width:${width}px;">
+        {{each options.option}}
+        <option fieldid="${fieldId}" autofillid="${autoFillId}" value="${value}">${value}</option>
+        {{/each}}
+      </select>
+      <!--p class="help-block">Example block-level help text here.</p-->
+      <p class="tools">
+        <a class="edit-link" onclick="showProperties(this);" data-id="${divId}">
+          Edit
+        </a>
+        |
+        <a class="remove-link" onclick="RemoveControl(this)" data-id="${divId}">Remove</a>
+      </p>
+    </div>
+  </script>
+
+  <!--
+      Below is the edit template for Calendar
+  -->
+  <script id="editCalendarTemplate" type="text/x-jquery-tmpl">
+    <div class="form-group draggable dropped" data-type="${divDataType}" id="${divId}">
+      <label for="${controlId}" style="display:none">${controlId} :</label>
+      <label for="input-text-label">${labelText}</label>
+      <div class="controls" style="display: block;">
+        <input type='text' disabled="disabled"
+               id="${controlId}"
+               name="${controlId}"
+               placeholder="${placeholder}"
+               title="${tooltip}"
+               isrequired="${validate.required}"
+               isDisabled="${validate.disabled}"
+               datatype="${validate.dataType}"
+               min="${validate.minValue}"
+               max="${validate.maxValue}"
+               fieldid="${fieldId}"
+               isshowlabel="${showlabel}"
+               maxlength="10"
+               pattern="${validate.pattern}"
+               style="width:${width}px;" />
+        <span class="glyphicon glyphicon-calendar "></span>
+      </div>
+      <!--p class="help-block">Example block-level help text here.</p-->
+      <p class="tools">
+        <a class="edit-link" onclick="showProperties(this);" data-id="${divId}">
+          Edit
+        </a>
+        |
+        <a class="remove-link" onclick="RemoveControl(this)" data-id="${divId}">Remove</a>
+      </p>
+    </div>
+  </script>
+  <!--
+      Below is the edit template for Header
+  -->
+  <script id="editHeaderTemplate" type="text/x-jquery-tmpl">
+    <div class="form-group draggable dropped" data-type="${divDataType}" id="${divId}">
+      <label style="display: none;" for="${controlId}">${controlId}</label>
+      <input type='text' class="form-control" id='Header-1' style="display: none;" />
+      <div id="headerTextdiv" style=" overflow-wrap: break-word; text-align: $;{headerTextAlign}" fieldid="${fieldId}">
+        {{html headerText}}
+      </div>
+
+      <!--p class="help-block">Example block-level help text here.</p-->
+      <p class="tools">
+        <a class="edit-link" onclick="showProperties(this);" data-id="${divId}">
+          Edit
+        </a>
+        |
+        <a class="remove-link" onclick="RemoveControl(this)" data-id="${divId}">Remove</a>
+      </p>
+    </div>
+  </script>
+
+  <!--
+      Below is the edit template for TextArea
+  -->
+  <script id="editTextAreaTemplate" type="text/x-jquery-tmpl">
+    <div class="form-group draggable dropped" data-type="${divDataType}" id="${divId}">
+      <label for="${controlId}" style="display:none">${controlId} :</label>
+      <label for="input-text-label">${labelText}</label>
+      <textarea class="form-control controls" rows="4" cols="11"
+                id="${controlId}"
+                name="${controlId}"
+                placeholder="${placeholder}"
+                title="${tooltip}"
+                maxlength="${maxLength}"
+                isrequired="${validate.required}"
+                rows="4"
+                cols="11"
+                fieldid="${fieldId}"
+                pattern="${validate.pattern}"
+                isshowlabel="${showlabel}"
+                style="display: block; width:${width}px;"></textarea>
+      <!--p class="help-block">Example block-level help text here.</p-->
+      <p class="tools">
+        <a class="edit-link" onclick="showProperties(this);" data-id="${divId}">
+          Edit
+        </a>
+        |
+        <a class="remove-link" onclick="RemoveControl(this)" data-id="${divId}">Remove</a>
+      </p>
+    </div>
+  </script>
+  <!--
+      Below is the edit template for PageHeader
+  -->
+  <script id="editPageHeaderTemplate" type="text/x-jquery-tmpl">
+    <div class="frow static dropped row" data-type="${divDataType}" id="${divId}" style="display: block;">
+      <div class="col-md-12">
+        <div class="col-md-10" id="headerTextdiv" style=" text-align: ${headerTextAlign}" fieldid="${fieldId}">
+          {{html headerText}}
+        </div>
+        <div class="col-md-2" style=" text-align: left;">
+          <img id="HeaderImageMain" style="width:100px;height:100px;" src="${headerImage}" />
+        </div>
+      </div>
+      <div class="col-md-12">
+        <p class="tools">
+          <a class="edit-link" onclick="showProperties(this);" data-id='pageHeaderdiv'>
+            Edit
+          </a>
+        </p>
+      </div>
+    </div>
+  </script>
+  <!--
+        Below is the edit template for Tab
+    -->
+  <script id="editTabTemplate" type="text/x-jquery-tmpl">
+    <div class="form-group draggable dropped" data-type="${divDataType}" id="${divId}">
+      <label style="display:none;" for="${controlId}">${controlId} :</label>
+      <label for="input-text-label" style="display:none;">${labelText}</label>
+
+      <div class="controls" style="display: block;">
+        <div id="${divContainerId}" class="tabcontrol">
+          <div class="tab">
+            {{each options.option}}
+            <input type="button"
+                   name="${controlId}"
+                   id="${controlId}"
+                   value="${name}"
+                   class="${classId}"
+                   onclick="OpenSelectedTab(this, '${contentId}')">
+            {{/each}}
+          </div>
+          {{each options.option}}
+          <div id="${contentId}" class="tabcontent">
+          </div>
+          {{/each}}
+        </div>
+      </div>
+      <!--p class="help-block">Example block-level help text here.</p-->
+      <p class="tools">
+        <a class="edit-link" onclick="showProperties(this);" data-id="${divId}">
+          Edit
+        </a>
+        |
+        <a class="remove-link" onclick="RemoveControl(this)" data-id="${divId}">Remove</a>
+      </p>
+    </div>
+  </script>
+
+  <!--
+       Below is the edit template for Grid
+   -->
+  <script id="editGridTemplate" type="text/x-jquery-tmpl">
+    <div class="form-group draggable dropped" data-type="${divDataType}" id="${divId}">
+      <label style="display:none;" for="${controlId}">${controlId} :</label>
+      <label for="input-text-label" style="display: none;">${labelText}</label>
+
+      <div class="controls" style="display: block;">
+        <div id="${divContainerId}" style="overflow-x: auto; max-width: 700px; white-space: nowrap;">
+          <table cellpadding="0" cellspacing="0" border="1" id="${divContainerId}" style="border-color: #d3d3d3; border-style: dotted solid; width: 100%">
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+      <!--p class="help-block">Example block-level help text here.</p-->
+      <p class="tools">
+        <a class="edit-link" onclick="showProperties(this);" data-id="${divId}">
+          Edit
+        </a>
+        |
+        <a class="remove-link" onclick="RemoveControl(this)" data-id="${divId}">Remove</a>
+      </p>
+    </div>
+  </script>
+
+  <!--
+       Below is the edit template for Table
+   -->
+  <script id="editTableTemplate" type="text/x-jquery-tmpl">
+    <div class="form-group draggable dropped" data-type="${divDataType}" id="${divId}">
+      <label style="display:none;" for="${controlId}">${controlId} :</label>
+      <label for="input-text-label" style="display: none;">${labelText}</label>
+
+      <div class="controls" style="display: block;">
+        <div id="${divContainerId}" style="overflow-x: auto; max-width: 700px; white-space: nowrap;">
+          <table cellpadding="0" cellspacing="0" border="1" id="${divContainerId}" style="border-color: #d3d3d3; border-style: dotted solid; width: 100%">
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+      <!--p class="help-block">Example block-level help text here.</p-->
+      <p class="tools">
+        <a class="edit-link" onclick="showProperties(this);" data-id="${divId}">
+          Edit
+        </a>
+        |
+        <a class="remove-link" onclick="RemoveControl(this)" data-id="${divId}">Remove</a>
+      </p>
+    </div>
+  </script>
+
+  <script id="editExcelGridTemplate" type="text/x-jquery-tmpl">
+    <div class="form-group draggable dropped" data-type="${divDataType}" id="${divId}">
+      <label style="display:none;" for="${controlId}">${controlId} :</label>
+      <label for="input-text-label" style="display: none;">${labelText}</label>
+
+      <div class="controls" style="display: block;">
+        <div id="${divContainerId}" style="overflow-x: auto; max-width: 700px; white-space: nowrap;">
+          <table cellpadding="0" cellspacing="0" border="1" id="${divContainerId}" style="    border-color: #d3d3d3;
+    border-style: dotted solid;
+    width: 100%">
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+      <!--p class="help-block">Example block-level help text here.</p-->
+      <p class="tools">
+        <a class="edit-link" onclick="showProperties(this);" data-id="${divId}">
+          Edit
+        </a>
+        |
+        <a class="remove-link" onclick="RemoveControl(this)" data-id="${divId}">Remove</a>
+      </p>
+    </div>
+  </script>
+</body>
+</html>

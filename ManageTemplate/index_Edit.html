@@ -1,0 +1,592 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Form Builder</title>
+	<link rel="stylesheet" href="css/jquery.ui.theme.css" />
+	<link rel="stylesheet" href="css/bootstrap.css" />
+	<script src="js/jquery.min.js"></script>
+	<script src="js/jquery.ui.min.js"></script>
+	<script src="js/lodash.js"></script>
+	<script src="js/bootstrap.js"></script>
+	<script src="js/beautifyhtml.js"></script>
+	<script src="js/jquery.tmpl.js"></script>
+	<script type="text/x-jquery-tmpl" src="templates.html"></script>
+	<script src="FormBuilder/Editform.js"></script>
+	<style>
+		.droppable-active {
+			background-color: #ffe !important;
+		}
+
+		.tools a {
+			cursor: pointer;
+			font-size: 80%;
+		}
+
+		.form-body .col-md-6,
+		.form-body .col-md-12 {
+			min-height: 400px;
+		}
+
+		.draggable {
+			cursor: move;
+		}
+	</style>
+	<script src="FormBuilder/main.js"></script>
+
+</head>
+
+<body style="background-color: #ddd;">
+	<nav class="navbar navbar-default navbar-fixed" role="navigation">
+		<!-- Brand and toggle get grouped for better mobile display -->
+		<div class="navbar-header">
+			<a class="navbar-brand" href="#">Form Builder</a>
+		</div>
+		<form class="navbar-form navbar-left">
+			<!-- <div class="form-group">
+				<select class="form-control" id="n-columns">
+				<option value="1">1 Column</option>
+				<option value="2">2 Columns</option>
+			</select>
+			</div> -->
+			<!-- <button type="submit" class="btn btn-primary" data-clipboard-text="testing" id="copy-to-clipboard">Preview Form </button> -->
+			<a href="/DynamicFrom.html" class="btn-info">Preview From</a>
+		</form>
+	</nav>
+	<div style="margin-top: -20px;">
+		<div class="row">
+			<div class="col-md-3" style="padding: 0px 30px 30px 30px; background-color: #fff;">
+				<h3>Elements</h3>
+				<form role="form">
+					<!--Header-->
+					<div class="form-group draggable" data-type="Header">
+						<span class="glyphicon glyphicon-header conrolimage"></span>
+						<label for="Header-1">Header</label>
+						<input type='text' class="form-control" id='Header-1' style="display: none;" />
+						<div id="headerTextdiv" style=" text-align: left">
+						</div>
+					</div>
+					<	!--TextBox-->
+					<div class="form-group draggable" data-type="TextBox">
+						<span class="glyphicon glyphicon-list-alt conrolimage"></span>
+						<label for="input-text-1">TextBox </label>
+						<label for="input-text-label"></label>
+						<input type="text" class="form-control controls" id="TextBox-1" name="TextBox-1" placeholder="Enter text" style="display: none;">
+						<!--p class="help-block">Example block-level help text here.</p-->
+					</div>
+
+					<!--TextArea-->
+					<div class="form-group draggable" data-type="TextArea">
+						<span class="glyphicon glyphicon-list-alt conrolimage"></span>
+						<label for="input-text-1">TextArea </label>
+						<label for="input-text-label"></label>
+						<textarea class="form-control controls" rows="4" cols="11" id="TextArea-1" name="TextArea-1" placeholder="Enter text" style="display: none;"></textarea>
+						<!--p class="help-block">Example block-level help text here.</p-->
+					</div>
+
+					<!--Radio-->
+					<div class="form-group draggable" data-type="Radio">
+						<span class="glyphicon glyphicon-list-alt conrolimage"></span>
+						<label class="control-label" for="RadioButton-1">Radio Group</label>
+						<label for="input-text-label"></label>
+						<div class="controls" style="display: none;">
+							<label class="radio" for="RadioButton-1">
+								<input type="radio" name="RadioButton-1" id="RadioButton-1" value="None" checked="checked"> None
+							</label>
+							<label class="radio" for="RadioButton-1">
+								<input type="radio" name="RadioButton-1" id="RadioButton-1" value="Option one"> Option one
+							</label>
+							<label class="radio" for="RadioButton-1">
+								<input type="radio" name="RadioButton-1" id="RadioButton-1" value="Option two"> Option two
+							</label>
+						</div>
+					</div>
+
+					<!--Label-->
+					<div class="from-group draggable" data-type="Label">
+						<span class="glyphicon glyphicon-list-alt conrolimage"></span>
+						<label class="control-label" for="multipleradios-0-0">Label Control</label>
+						<label for="input-text-label"></label>
+
+					</div>
+
+					<!--DropDown-->
+					<div class="form-group draggable" data-type="DropDown">
+						<span class="glyphicon glyphicon-list-alt conrolimage"></span>
+						<label for="select-1">Select</label>
+						<label for="input-text-label"></label>
+						<select class="form-control controls" style="display: none;" id="select-1">
+							<option value="Option 1">Option 1</option>
+							<option value="Option 2">Option 2</option>
+							<option value="Option 3">Option 3</option>
+						</select>
+						<!--p class="help-block">Example block-level help text here.</p-->
+					</div>
+
+					<!--Calender-->
+					<div class="form-group draggable" data-type="Calender">
+						<span class="glyphicon glyphicon-list-alt conrolimage"></span>
+						<label for="Calender-1">Calender Control</label>
+						<label for="input-text-label"></label>
+						<div class="controls" style="display: none;">
+						
+							<input type='text' disabled="disabled" id='Calender-1' style="width:110px;" />
+							<span class="glyphicon glyphicon-calendar "></span>
+						</div>
+					</div>
+
+					<!--Table-->
+					<div class="form-group draggable" data-type="Table">
+						<label for="table-file-1">Table</label>
+						<table border="1" style="height:100px;width:130px">
+							<tr>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+						</table>
+					</div>
+				</form>
+			</div>
+			<div class="col-md-6" style="padding: 30px;">
+				<div style="background-color: #fff; border-radius: 5px; padding: 20px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);">
+					<div class="text-muted empty-form text-center" style="font-size: 24px;">Drag & Drop elements to build form.</div>
+					<div class="row form-body">
+
+						<div class="col-md-12 droppable sortable" id="maindiv">
+
+							<div class="row static dropped" id="pageHeaderdiv" data-type="PageHeader" style="height:100px;display: block;">
+								<div class="col-md-10" id="headerTextdiv" style=" text-align: center">
+									<h4>Page header</h4>
+								</div>
+								<div class="col-md-2" style=" text-align: left;">
+									<img id="HeaderImageMain" style="width:80px;height:80px;" src="#" />
+								</div>
+								<p class="tools">
+									<a class="edit-link" onclick="showProperties(this);" data-id='pageHeaderdiv'>Edit
+									</a>
+								</p>
+							</div>
+
+						</div>
+
+						<div id="jsontext">ddd</div>
+						<div class="col-md-6 droppable sortable" style="display: none;">
+						</div>
+						<div class="col-md-6 droppable sortable" style="display: none;">
+						</div>
+					</div>
+					<div>
+						<button id="btnSave" onclick="SetJSON();" class="btn btn-primary">Save</button>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-3" style="padding: 0px 30px 30px 30px; background-color: #fff;min-height: 750px;">
+				<div class="row propertyDiv">
+					<h3>Properties</h3>
+					<br/>
+					<form role="form" id="Properties">
+						<!--
+						Controls properties will come here using jquery template engine
+					-->
+					</form>
+					<hr>
+					<div id="data" class="pull-right">
+						<button id="btnSaveProperties" onclick="SetProperties(this);" class="btn btn-primary">Save Properties</button>
+						<input type="hidden" id="hdnSelectedControlType" value="">
+						<input type="hidden" id="hdnSelectedControlId" value="">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	</div>
+</body>
+
+</html>
+<script id="textboxPropertiesTemplate" type="text/x-jquery-tmpl">
+	<div class="form-group">
+		<label for="txtLabelText">Label</label>
+		<input type="text" class="form-control LabelText" id="txtLabelText" placeholder="Label text">
+
+		<label for="TextBoxName">Name</label>
+		<input type="text" class="form-control ControlName" id="TextBoxName" placeholder="Control name">
+
+		<label for="placeholder">Placeholder</label>
+		<input type="text" class="form-control TextBoxPlaceholder" id="txtplaceholder" placeholder="placeholder">
+
+		<label for="Tooltip">Tooltip</label>
+		<input type="text" class="form-control Tooltip" id="txtTooltip" placeholder="Tooltip">
+
+		<label for="Max Length">Max Length</label>
+		<input type="text" class="form-control MaxLength" id="txtMaxLength" maxlength="10" style="width:100px" placeholder="Max length">
+		
+		<label for="txtWidth">Width</label>
+		<input type="text" class="form-control ControlWidth" id="txtWidth" maxlength="4" style="width:110px" placeholder="Control width">
+
+		<label for="Required">Required</label> <input type="checkbox"  class="Required" style="height:15px;width:15px;" id="chkRequired" text="Required" />
+		<div class="form-group " data-type="DropDown">
+			<label for="select-1">Data Type:</label>
+			<select class="form-control DataType" id="select" onchange="showhideminmaxcontrol(this)">
+					<option value="Select">Select</option> 
+					<option value="AlphaNumeric">AlphaNumeric</option> 
+					<option value="Numeric">Numeric</option>   
+					<option value="Decimal">Decimal</option> 
+			</select>
+		</div>
+		<div class="minmaxcontrol" style="display: none;">
+		<label for="txtMinValue">Min value</label>
+		<input type="text" class="form-control MinValue" id="txtMinValue" maxlength="10" style="width:100px" placeholder="Min Value">
+		
+		<label for="txtMaxValue">Max value</label>
+		<input type="text" class="form-control MaxValue" id="txtMaxValue" maxlength="4" style="width:100px" placeholder="Max Value">
+		</div>
+		<label for="SectionName">SectionName</label>
+		<input type="text" class="form-control SectionName" id="txtSectionName" placeholder="Enter Section Name">
+	</div>
+</script>
+<script id="textareaPropertiesTemplate" type="text/x-jquery-tmpl">
+	<div class="form-group">
+		<label for="txtLabelText">Label</label>
+		<input type="text" class="form-control LabelText" id="txtLabelText" placeholder="Label text">
+
+		<label for="TextBoxName">Name</label>
+		<input type="text" class="form-control ControlName" id="TextBoxName" placeholder="Control name">
+
+		<label for="placeholder">Placeholder</label>
+		<input type="text" class="form-control TextBoxPlaceholder" id="txtplaceholder" placeholder="placeholder">
+
+		<label for="Tooltip">Tooltip</label>
+		<input type="text" class="form-control Tooltip" id="txtTooltip" placeholder="Tooltip">
+
+		<label for="Max Length">Max Length</label>
+		<input type="text" class="form-control MaxLength" id="txtMaxLength" maxlength="10" style="width:100px" placeholder="Max length">
+		
+		<label for="txtWidth">Width</label>
+		<input type="text" class="form-control ControlWidth" id="txtWidth" maxlength="4" style="width:110px" placeholder="Control width">
+
+		<label for="Required">Required</label> <input type="checkbox" class="Required" style="height:15px;width:15px;" id="chkRequired" text="Required" />
+		
+	</div>
+</script>
+<script id="dropdownPropertiesTemplate" type="text/x-jquery-tmpl">
+	<div>
+		<div class="form-group " data-type="DropDown">
+			<label for="select-1">Select Type:</label>
+			<select class="form-control" id="select-1" onchange="showAutoFillContainer(this)">
+					<option value="Select">Select</option> 
+					<option value="AlphaNumeric">AlphaNumeric</option> 
+					<option value="Numeric">Numeric</option>     
+					<option value="Date">Date</option>       
+					<option value="Boolean">Boolean</option>  
+					<option value="Decimal">Decimal</option> 
+			</select>
+
+		</div>
+		<div id="divAutofillSection" style="display:none;">
+			<div class="form-group" data-type="DropDown">
+				<input type="text" class="form-control" id="txtAutoFillValues" placeholder="Enter Autofill value">
+			</div>
+			<div class="form-group" data-type="DropDown">
+				<input type="button" class="btn btn-info" value="ADD">
+			</div>
+			<div class="form-group " data-type="DropDown">
+				<label for="select-1">Autofill Values</label>
+				<select class="form-control" id="select-1">
+				</select>
+			</div>
+		</div>
+
+	</div>
+</script>
+
+<script id="radioPropertiesTemplate" type="text/x-jquery-tmpl">
+	<div class="form-group">
+		<label for="txtLabelText">Label</label>
+		<input type="text" class="form-control LabelText" id="txtLabelText" placeholder="Label text">
+
+		<label for="ControlName">Name</label>
+		<input type="text" class="form-control ControlName" id="ControlName" placeholder="Control name">
+
+		<label for="Tooltip">Tooltip</label>
+		<input type="text" class="form-control Tooltip" id="txtTooltip" placeholder="Tooltip">
+	
+		<label for="select-1">Option Data Type:</label>
+		<select class="form-control DataType" id="select" style="width:120px"">
+				<option value="Select">Select</option> 
+				<option value="AlphaNumeric">AlphaNumeric</option> 
+				<option value="Numeric">Numeric</option>   
+				<option value="Decimal">Decimal</option> 
+				<option value="Date">Date</option> 
+		</select>
+		
+
+		<label for="Options">Options:</label>
+		<div><div class="sortable-options-wrap">
+			<ol class="sortable-options ui-sortable RadioGroupProp">
+				<li class="ui-sortable-handle">					
+					<input class="option-label" value="None" name="radio-group-option" placeholder="Value" type="text" style="width:115px">
+				</li>
+				<li class="ui-sortable-handle">					
+					<input class="option-label" value="Option 1" name="radio-group-option" placeholder="Value" type="text" style="width:115px">
+					<!--input class="option-value" value="option-1" name="radio-group-option" placeholder="Value" type="text" style="width:115px"-->
+					<a class="remove btn" title="Remove Element" onclick="removeLi(this);">×</a>
+				</li>
+				<li class="">					
+					<input type="text" class="option-label" value="" name="radio-group-option" placeholder="Value" style="width:115px onkeydown="return alphanumericOnly(event);">
+					<!--input class="option-value" value="" name="radio-group-option" placeholder="Value" type="text" style="width:115px"-->
+					<a class="remove btn" title="Remove Element" onclick="removeLi(this);">×</a>
+				</li>
+			</ol>
+			<div class="option-actions">
+				<!--a class="add add-opt">Add Option +</a-->
+				<button type="button" class="btn ng-binding" onclick="addRadioOption()">Add Value</button>
+			</div>
+		</div> 
+	</div>
+
+		<label for="Required">Required</label> <input type="checkbox" class="Required" style="height:15px;width:15px;" id="chkRequired" text="Required" ><br/>
+		
+		<label for="SectionName">SectionName</label>
+		<input type="text" class="form-control SectionName" id="txtSectionName" placeholder="Enter Section Name">
+	</div>
+</script>
+<script id="pageHeaderPropertiesTemplate" type="text/x-jquery-tmpl">
+	<div class="form-group">
+			<label for="txtHeaderText">Header</label>
+			<input type="text" class="form-control HeaderText" id="txtHeaderText" placeholder="Label text">
+			<label for="Type">Type:</label>
+			<select class="form-control" id="Type">
+				<option value="H1">H1</option> 
+				<option value="H2">H2</option> 
+				<option value="H3">H3</option>   
+				<option value="H4">H4</option> 
+			</select>			
+			<label for="TextAlign">Text Align:</label>
+			<select class="form-control" id="TextAlign" >
+				<option value="center">Center</option> 
+				<option value="right">Right</option>  			
+				<option value="left">Left</option>
+			</select>	
+			<label for="ImageAlign">Image Align:</label>
+			<select class="form-control DataType" id="ImageAlign" >	
+				<option value="right">Right</option>  			
+				<option value="left">Left</option> 				 
+			</select>		
+			<label for="imageFile">Header Image</label>
+			<input type='file' id="imageFile" onchange="readURL(this);" />
+			<img id="HeaderImage" src="#"  style="width:80px;height:80px;" />
+	</div>
+</script>
+
+<script id="headerPropertiesTemplate" type="text/x-jquery-tmpl">
+	<div class="form-group">
+			<label for="txtHeaderText">Header</label>
+			<input type="text" class="form-control HeaderText" id="txtHeaderText" placeholder="Label text">
+			<label for="Type">Type:</label>
+			<select class="form-control " id="Type">
+				<option value="H1">H1</option> 
+				<option value="H2">H2</option> 
+				<option value="H3">H3</option>   
+				<option value="H4">H4</option> 
+			</select>			
+			<label for="TextAlign">Text Align:</label>
+			<select class="form-control " id="TextAlign" >
+				<option value="left">Left</option>				
+				<option value="right">Right</option>  	
+				<option value="center">Center</option>
+			</select>				
+	</div>
+</script>
+<script id="calenderPropertiesTemplate" type="text/x-jquery-tmpl">
+	<div class="form-group">
+		<label for="txtLabelText">Label</label>
+		<input type="text" class="form-control LabelText" id="txtLabelText" placeholder="Label text">
+
+		<label for="TextBoxName">Name</label>
+		<input type="text" class="form-control ControlName" id="TextBoxName" placeholder="Control name">
+
+		<label for="placeholder">Placeholder</label>
+		<input type="text" class="form-control TextBoxPlaceholder" id="txtplaceholder" placeholder="placeholder">
+
+		<label for="Tooltip">Tooltip</label>
+		<input type="text" class="form-control Tooltip" id="txtTooltip" placeholder="Tooltip">
+		
+		<label for="txtWidth">Width</label>
+		<input type="text" class="form-control ControlWidth" id="txtWidth" maxlength="4" style="width:110px" placeholder="Control width">
+
+		<label for="Required">Required</label> <input type="checkbox" class="Required" style="height:15px;width:15px;" id="chkRequired" text="Required" />
+		<div class="form-group " data-type="DropDown">
+			<label for="select-1">Date Format:</label>
+			<select class="form-control DateFormat" id="select" style="width:160px">
+					<option value="Select">Select</option> 
+					<option value="dd-MM-yyyy">DD-MM-YYYY</option> 
+					<option value="dd/MM/yyyy">DD/MM/YYYY</option>   
+					<option value="MM-dd-yyyy">MM-DD-YYYY</option> 
+					<option value="MM/dd/yyyy">MM/DD/YYYY</option> 
+					<option value="MMM dd, yyyy">MMM DD, YYYY</option> 
+			</select>
+		</div>
+
+		<label for="txtMinValue">Min Date</label>
+		<input type="text" class="form-control MinValue" id="txtMinValue" maxlength="10" style="width:130px" placeholder="Min Value">
+		
+		<label for="txtMaxValue">Max Date</label>
+		<input type="text" class="form-control MaxValue" id="txtMaxValue" maxlength="4" style="width:130px" placeholder="Max Value">
+		
+	</div>
+</script>
+
+<!--
+    Below is the eit template for TextBox
+-->
+<script id="editTextboxTemplate" type="text/x-jquery-tmpl">    
+	<div class="form-group draggable dropped" data-type="${divDataType}" id="${divId}">		
+		<label for="${controlId}">${controlId} :</label>
+		<label for="input-text-label">${labelText}</label>
+		<input type="text" class="form-control controls" 
+		id="${controlId}" 
+		name="${controlId}" 
+		placeholder="${placeholder}"  
+		title ="${tooltip}"  
+		maxLength ="${maxLength}"  
+		required ="${validate.required}"  
+		dataType ="${validate.dataType}"  
+		min ="${validate.minValue}"  
+		max ="${validate.maxValue}" 
+		style="display: block; width:${width}px;">
+		<!--p class="help-block">Example block-level help text here.</p-->
+	<p class="tools">
+			<a class="edit-link" onclick="showProperties(this);" data-id="${divId}">Edit<a> | 
+			<a class="remove-link" onclick="" data-id="${divId}">Remove111</a></p>
+	</div>
+</script>
+<!--
+    Below is the eit template for Rdio
+-->
+<script id="editRadioTemplate" type="text/x-jquery-tmpl">    
+	<div class="form-group draggable dropped" data-type="${divDataType}" id="${divId}">		
+		<label for="${controlId}">${controlId} :</label>
+		<label for="input-text-label">${labelText}</label>
+
+		<div class="controls" style="display: block;">			
+			{{each options }}
+			<label class="radio" for="${controlId}">
+				<input type="radio" 
+				name="${controlId}" 
+				id="${controlId}" 
+				value="${value}" 
+				required ="${validate.required}"  
+				dataType ="${validate.dataType}" 
+				title ="${tooltip}"  
+				> ${value}
+			</label>
+		{{/each}}			
+		</div>		
+		<!--p class="help-block">Example block-level help text here.</p-->
+	<p class="tools">
+			<a class="edit-link" onclick="showProperties(this);" data-id="${divId}">Edit<a> | 
+			<a class="remove-link" onclick="" data-id="${divId}">Remove111</a></p>
+	</div>
+</script>
+<!--
+    Below is the eit template for Calender
+-->
+<script id="editCalenderTemplate" type="text/x-jquery-tmpl">    
+	<div class="form-group draggable dropped" data-type="${divDataType}" id="${divId}">		
+		<label for="${controlId}">${controlId} :</label>
+		<label for="input-text-label">${labelText}</label>
+		<div class="controls" style="display: block;">
+			<input type='text' disabled="disabled" 
+			id="${controlId}" 
+			name="${controlId}" 
+			placeholder="${placeholder}"  
+			title ="${tooltip}" 
+			required ="${validate.required}"  
+			dataType ="${validate.dataType}"  
+			min ="${validate.minValue}"  
+			max ="${validate.maxValue}" 
+			 style="width:${width}px;" />
+			<span class="glyphicon glyphicon-calendar "></span>
+		</div>
+		<!--p class="help-block">Example block-level help text here.</p-->
+	<p class="tools">
+			<a class="edit-link" onclick="showProperties(this);" data-id="${divId}">Edit<a> | 
+			<a class="remove-link" onclick="" data-id="${divId}">Remove111</a></p>
+	</div>
+</script>
+<!--
+    Below is the eit template for Header
+-->
+<script id="editHeaderTemplate" type="text/x-jquery-tmpl">    
+	<div class="form-group draggable dropped" data-type="${divDataType}" id="${divId}">		
+		<label for="${controlId}">${controlId}</label>
+		<input type='text' class="form-control" id='Header-1' style="display: none;" />
+		<div id="headerTextdiv" style=" text-align: ${headerTextAlign}">
+			
+			{{html headerText}}
+		</div>
+
+		<!--p class="help-block">Example block-level help text here.</p-->
+	<p class="tools">
+			<a class="edit-link" onclick="showProperties(this);" data-id="${divId}">Edit<a> | 
+			<a class="remove-link" onclick="" data-id="${divId}">Remove111</a></p>
+	</div>
+</script>
+
+<!--
+    Below is the eit template for TextArea
+-->
+<script id="editTextAreaTemplate" type="text/x-jquery-tmpl">    
+	<div class="form-group draggable dropped" data-type="${divDataType}" id="${divId}">		
+		<label for="${controlId}">${controlId} :</label>
+		<label for="input-text-label">${labelText}</label>
+		<input type="text" class="form-control controls" 
+		id="${controlId}" 
+		name="${controlId}" 
+		placeholder="${placeholder}"  
+		title ="${tooltip}"  
+		maxLength ="${maxLength}"  
+		required ="${validate.required}"  		
+		style="display: block; width:${width}px;">
+		<!--p class="help-block">Example block-level help text here.</p-->
+	<p class="tools">
+			<a class="edit-link" onclick="showProperties(this);" data-id="${divId}">Edit<a> | 
+			<a class="remove-link" onclick="" data-id="${divId}">Remove111</a></p>
+	</div>
+</script>
+<!--
+    Below is the eit template for PageHeader
+-->
+<script id="editPageHeaderTemplate" type="text/x-jquery-tmpl">    
+	<div class="frow static dropped" data-type="${divDataType}" id="${divId}" style="height:100px;display: block;">		
+			<div class="col-md-10" id="headerTextdiv" style=" text-align: ${headerTextAlign}"">
+					{{html headerText}}
+			</div>
+			<div class="col-md-2" style=" text-align: left;">
+				<img id="HeaderImageMain" style="width:80px;height:80px;" src="${headerImage}" />
+			</div>
+			<p class="tools">
+				<a class="edit-link" onclick="showProperties(this);" data-id='pageHeaderdiv'>Edit
+				</a>
+			</p>
+
+	</div>
+</script>
+

@@ -1,0 +1,158 @@
+.droppable-active {
+	background-color: #ffe !important;
+}
+.tools{margin: 5px 0px 0px 0px !important;}
+.tools a {
+	cursor: pointer;
+	font-size: 100%;
+            
+}
+
+.draggable {
+	cursor: move;
+}
+.tab {
+    overflow: hidden;
+    border: 1px solid #ccc;
+    background-color: #f1f1f1;
+}
+
+/* Style the buttons inside the tab */
+.tab input {
+    background-color: #ededed;
+    float: left;
+    border: 0.5px solid #ccc;
+    border-left:none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    transition: 0.3s;
+    font-size: 17px;
+}
+
+/* Change background color of buttons on hover */
+.tab input:hover {
+    background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+.tab input.active {
+    background-color: #ccc;
+}
+
+/* Style the tab content */
+.tabcontent {
+    display: none;
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    border-top: none;
+}
+
+.hideControl {
+    display: none;
+}
+
+.radio + .radio,
+.checkbox + .checkbox {
+  margin-top: -5px !important;
+}
+.radio input[type="radio"],
+.radio-inline input[type="radio"],
+.checkbox input[type="checkbox"],
+.checkbox-inline input[type="checkbox"] {
+  position: relative !important;
+  margin-left: 0px !important;
+}
+
+.erroralert {
+    color: red;
+    font-size: 12px;
+}
+
+.columncontent
+{
+    height:40px;
+    width:60px;
+    padding: 14px !important;
+}
+.watermark {
+    position: relative;
+    color: #C0C0C0;
+    font-size: 15px;
+    text-align: center;
+}
+ .textareaTableContent {
+    resize: none;
+    margin-bottom: 0px;
+    margin-top: 0px;
+    min-height: 41px;
+    border:none;
+}
+
+  .textareaExcelGridContent {
+    resize: none;
+    margin-bottom: 0px;
+    margin-top: 0px;
+    min-height: 41px;
+    border:none;
+}
+ .tabcontentitem {
+    color: #C0C0C0;
+    font-size: 15px;
+    text-align: center;
+}
+ .form-group {
+    margin-bottom: 10px;
+}
+ .content_top{margin-top: 22px; padding-left: 31px;}
+.add_new_txt_icon {
+  color: #009ccc !important;
+  font-size: 15px !important;
+}
+.pad10 {
+  padding-top: 10px !important;
+}
+.add_new_checkbox{position: absolute;
+  margin-top: 12px !important;
+  margin-left: 7px !important;}
+
+.add_new_checkbox1 {
+  position: relative;
+  margin-top: -1px !important;
+
+}
+
+.add_new_checkbox2 {
+  position: absolute;
+  margin-top: 12px !important;
+  margin-left: 7px !important;
+}
+.pad0015 {
+  padding-left: 15px;
+}
+.form-group label {
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+  color: #002a5c !important;
+  font-size: 14px;
+  margin-bottom: 5px;
+  font-weight: 700;
+}
+.pad10.multi_radio_btn label {
+  display: inline-block;
+}
+
+.cancel-button-temp {
+  background: #6c757d;
+  color: #fff;
+  font-size: 14px;
+  padding: 6px 14px;
+}
+
+.cancel-button-temp:hover {
+  background: #5a6268;
+  color: #fff;
+}
+.rhs-Properties-row {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}

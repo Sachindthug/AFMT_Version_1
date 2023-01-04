@@ -1,0 +1,333 @@
+﻿<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Dynamic Form</title>
+    <link rel="stylesheet" href="css/jquery.ui.theme.css" />
+    <link rel="stylesheet" href="css/bootstrap.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker-standalone.min.css"/>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery.ui.min.js"></script>
+    <script src="js/lodash.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <script src="js/beautifyhtml.js"></script>
+    <script src="js/jquery.tmpl.js"></script>
+    <script src="FormBuilder/Editform.js"></script>
+    <script src="FormBuilder/FormPreview.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+
+</head>
+<body>
+<style>
+    .form-group.required .control-label:after {
+        content: "*";
+        color: red;
+    }
+
+    .required {
+        color: red;
+    }
+</style>
+<body>
+    
+    <form role="form" id="previewform">
+        <input id="hdnFormId" name="hdnFormId" type="hidden" value="@Model.FormId">
+        <input id="hdnDateFormat" name="hdnFormId" type="hidden" value="@Model.DateFormat">
+        <div class="form-inline form-group" style="display:none">
+            <div class="form-group">
+                <div class="input-group">
+                    <input type="text" class="form-control" name="sample-date" />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" data-toggle="datepicker" data-target-name="sample-date">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </button>
+                    </span>
+                </div>
+            </div>
+        </div>
+      
+        <div class="col-md-12" style="padding: 0px 2px 0px 0px;">
+            <div class="panel-body" style="background-color: #fff; border-radius: 5px; padding: 20px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175); min-height: 360px;">
+
+
+                <div class="col-sm-10 col-sm-offset-2 col-xs-12" id="maindiv" style="min-height: 360px;">
+
+
+                </div>
+                <div class="col-sm-8  col-sm-offset-4 col-xs-12  text-right">
+                    <button id="" class="btn btn-primary">Demo Save</button>
+                    <input type="button" class="btn btn-primary" id="btnCancle" value="Cancle" />
+                </div>
+            </div>
+        </div>
+    </form>
+
+</body>
+<!--
+    Below is the eit template for TextBox
+-->
+<script id="editTextboxTemplate" type="text/x-jquery-tmpl">
+    <div class="form-group" data-type="${divDataType}" id="${divId}">
+        <label class="fd_Labeladmin " for="${controlId}">
+            ${labelText} :
+            {{if validate.required == "true"}}
+            <span class='required'>*</span>
+            {{/if}}
+        </label>
+        {{if validate.required == "true"}}
+        <input type="text" class="form-control controls"
+               id="${controlId}"
+               name="${controlId}"
+               placeholder="${placeholder}"
+               title="${tooltip}"
+               maxlength="${maxLength}"
+               required="${validate.required}"
+               oninvalid="this.setCustomValidity('Enter ${labelText}')"
+               oninput="setCustomValidity('')"
+               datatype="${validate.dataType}"
+               min="${validate.minValue}"
+               max="${validate.maxValue}"
+               style="width:${width}px;">
+        {{else}}
+        <input type="text" class="form-control controls"
+               id="${controlId}"
+               name="${controlId}"
+               placeholder="${placeholder}"
+               title="${tooltip}"
+               maxlength="${maxLength}"
+               datatype="${validate.dataType}"
+               min="${validate.minValue}"
+               max="${validate.maxValue}"
+               style="width:${width}px;">
+        {{/if}}
+
+
+    </div>
+
+</script>
+<!--
+    Below is the eit template for CheckBox
+-->
+<script id="editCheckBoxTemplate" type="text/x-jquery-tmpl">
+    <div class="form-group" data-type="${divDataType}" id="${divId}">
+        <label class="fd_Labeladmin" for="${controlId}">
+            ${labelText} :
+            {{if validate.required == "true"}}
+            <span class='required'>*</span>
+            {{/if}}
+        </label>
+
+        <div class="controls" style="display: block;">
+            {{each options.option}}
+            <div>
+                <label class="fd_Labeladmin" for="${controlId}">
+                    {{if validate.required == "true"}}
+                    <input type="checkbox"
+                           name="${controlId + '[]'}"
+                           id="${controlId}"
+                           value="${value}"
+                           required="${validate.required}"
+                           datatype="${validate.dataType}"
+                           title="${tooltip}">
+                    {{else}}
+                    <input type="checkbox"
+                           name="${controlId + '[]'}"
+                           id="${controlId}"
+                           value="${value}"
+                           datatype="${validate.dataType}"
+                           title="${tooltip}">
+                    {{/if}}
+
+                    ${value}
+                </label>
+            </div>
+            {{/each}}
+        </div>
+    </div>
+</script>
+<!--
+    Below is the eit template for Rdio
+-->
+<script id="editRadioTemplate" type="text/x-jquery-tmpl">
+    <div class="" data-type="${divDataType}" id="${divId}">
+        <label class="fd_Labeladmin" for="${controlId}">
+            ${labelText} :
+            {{if validate.required == "true"}}
+            <span class='required'>*</span>
+            {{/if}}
+        </label>
+        <div class="controls" style="display: block;">
+            {{if validate.required != "true"}}
+            <div>
+                <label class="fd_Labeladmin">
+                    <input type="radio"
+                           name="${controlId}"
+                           id="${controlId}"
+                           value=""> None
+                </label>
+            </div>
+            {{/if}}
+            {{each options.option}}
+            <div>
+                <label class="fd_Labeladmin">
+                    {{if validate.required == "true"}}
+                    <input type="radio"
+                           name="${controlId}"
+                           id="${controlId}"
+                           value="${value}"
+                           required="${validate.required}">
+                    {{else}}
+                    <input type="radio"
+                           name="${controlId}"
+                           id="${controlId}"
+                           value="${value}">
+                    {{/if}}
+                    ${value}
+                </label>
+            </div>
+            {{/each}}
+        </div>
+    </div>
+</script>
+
+<!--
+    Below is the eit template for DropDownList
+-->
+<script id="editDropDownListTemplate" type="text/x-jquery-tmpl">
+    <div class="form-group" data-type="${divDataType}" id="${divId}">
+        <label class="fd_Labeladmin" for="${controlId}">
+            ${labelText} :
+            {{if validate.required == "true"}}
+            <span class='required'>*</span>
+            {{/if}}
+        </label>
+        {{if validate.required == "true"}}
+            <select class="form-control controls"
+                id="${controlId}"
+                name="${controlId}"
+                title="${tooltip}"
+                required="${validate.required}"
+                style="display: block; width:${width}px;">
+       {{else}}
+            <select class="form-control controls"
+                    id="${controlId}"
+                    name="${controlId}"
+                    title="${tooltip}"
+                    style="display: block; width:${width}px;">
+       {{/if}}
+                <option value="">Select</option>
+                {{each options.option}}
+                <option value="${value}">${value}</option>
+                {{/each}}
+            </select>
+    </div>
+</script>
+<!--
+    Below is the eit template for Calendar
+-->
+<script id="editCalendarTemplate" type="text/x-jquery-tmpl">
+    <div class="form-group" data-type="${divDataType}" id="${divId}">
+        <label class="fd_Labeladmin" for="${controlId}">
+            ${labelText} :
+            {{if validate.required == "true"}}
+            <span class='required'>*</span>
+            {{/if}}
+        </label>
+
+        <div class="form-inline form-group">
+        
+            <div class="input-group date" id="${ 'Div'+controlId}">
+                {{if validate.required == "true"}}
+                <input type="text" class="form-control datepicker"
+                       id="${controlId}"
+                       name="${controlId}"
+                       placeholder="${placeholder}"
+                       title="${tooltip}"
+                       required="${validate.required}"
+                       style="width:${width}px;" />
+                {{else}}
+                <input type="text" class="form-control datepicker"
+                       id="${controlId}"
+                       name="${controlId}"
+                       placeholder="${placeholder}"
+                       title="${tooltip}"
+                       style="width:${width}px;" />
+                {{/if}}
+                <span class="input-group-addon text-pointer">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
+           
+        </div>
+
+    
+    </div>
+</script>
+<!--
+    Below is the eit template for Header
+-->
+<script id="editHeaderTemplate" type="text/x-jquery-tmpl">
+    <div class="form-group" data-type="${divDataType}" id="${divId}">
+        <input type='text' class="form-control" id='Header-1' style="display: none;" />
+        <div id="headerTextdiv" style=" text-align: ${headerTextAlign}">
+
+            {{html headerText}}
+        </div>
+    </div>
+</script>
+
+<!--
+    Below is the eit template for TextArea
+-->
+<script id="editTextAreaTemplate" type="text/x-jquery-tmpl">
+    <div class="form-group" data-type="${divDataType}" id="${divId}">
+        <label class="fd_Labeladmin" for="${controlId}">
+            ${labelText} :
+            {{if validate.required == "true"}}
+            <span class='required'>*</span>
+            {{/if}}
+        </label>
+        {{if validate.required == "true"}}
+        <textarea class="form-control controls"
+                  rows="4"
+                  cols="11"
+                  id="${controlId}"
+                  name="${controlId}"
+                  placeholder="${placeholder}"
+                  title="${tooltip}"
+                  maxlength="${maxLength}"
+                  required="${validate.required}"
+                  style="display: block; width:${width}px;" />
+        {{else}}
+        <textarea class="form-control controls"
+                  rows="4"
+                  cols="11"
+                  id="${controlId}"
+                  name="${controlId}"
+                  placeholder="${placeholder}"
+                  title="${tooltip}"
+                  maxlength="${maxLength}"
+                  style="display: block; width:${width}px;" />
+        {{/if}}
+    </div>
+</script>
+<!--
+    Below is the eit template for PageHeader
+-->
+<script id="editPageHeaderTemplate" type="text/x-jquery-tmpl">
+    <div class="row static dropped" data-type="${divDataType}" id="${divId}" style="height:100px;display: block;">
+        <div class="col-sm-10" id="headerTextdiv" style=" text-align: ${headerTextAlign}" fieldid="${fieldId}">
+            {{html headerText}}
+        </div>
+        <div class="col-sm-2 thumbnail" style=" text-align: left;">
+            <img id="HeaderImageMain" style=":100px;height:100px;" src="${headerImage}" />
+        </div>
+    </div>
+   
+</script>
+</body>
